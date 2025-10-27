@@ -1,33 +1,38 @@
 package com.midoribank.atm;
 
-/**
- * Representa o perfil de um usuário, incluindo dados da conta e saldo.
- * Esta classe encapsula toda a informação e as operações básicas de uma conta.
- */
-
 public class UserProfile {
     private String nome;
     private String numeroConta;
-    private String agencia; // Novo campo
-    private String senha;
+    private String agencia; 
+    private String senhaConta; // Renomeado para clareza
     private double saldo;
+    private String numeroCartao; // Novo
+    private String senhaCartao;  // Novo
 
-    public UserProfile(String nome, String numeroConta, String agencia, String senha, double saldo) {
+    public UserProfile(String nome, String numeroConta, String agencia, String senhaConta, double saldo, String numeroCartao, String senhaCartao) {
         this.nome = nome;
         this.numeroConta = numeroConta;
-        this.agencia = agencia; // Adicionado ao construtor
-        this.senha = senha;
+        this.agencia = agencia; 
+        this.senhaConta = senhaConta;
         this.saldo = saldo;
+        this.numeroCartao = numeroCartao; // Adicionado
+        this.senhaCartao = senhaCartao;   // Adicionado
     }
 
     // Getters
     public String getNome() { return nome; }
     public String getNumeroConta() { return numeroConta; }
-    public String getAgencia() { return agencia; } // Novo getter
-    public String getSenha() { return senha; }
+    public String getAgencia() { return agencia; } 
+    public String getSenhaConta() { return senhaConta; } // Renomeado
     public double getSaldo() { return saldo; }
+    public String getNumeroCartao() { return numeroCartao; } // Novo
+    public String getSenhaCartao() { return senhaCartao; }   // Novo
 
-    // Métodos de Operação
+    // Método para validar a senha do cartão
+    public boolean validarSenhaCartao(String senhaDigitada) {
+        return this.senhaCartao.equals(senhaDigitada);
+    }
+
     public void depositar(double valor) {
         if (valor > 0) {
             this.saldo += valor;
