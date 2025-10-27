@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1200.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.DepositarController">
+   <children>
+      <TextField fx:id="valorField" cache="true" layoutX="378.0" layoutY="230.0" prefHeight="131.0" prefWidth="709.0" promptText="Total" style="-fx-background-radius: 15;">
+         <font>
+            <Font name="Montserrat Regular" size="37.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="50.0" />
+         </padding>
+      </TextField>
+      <Pane fx:id="paneVinte" layoutX="378.0" layoutY="390.0" prefHeight="131.0" prefWidth="290.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
+         <children>
+            <Text layoutX="63.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 20">
+               <font>
+                  <Font name="Montserrat ExtraLight" size="58.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="paneCinquenta" layoutX="687.0" layoutY="390.0" prefHeight="131.0" prefWidth="290.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15 0 0 15;">
+         <children>
+            <Text layoutX="62.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 50">
+               <font>
+                  <Font name="Montserrat ExtraLight" size="58.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="paneCem" layoutX="378.0" layoutY="550.0" prefHeight="131.0" prefWidth="290.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
+         <children>
+            <Text layoutX="49.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 100">
+               <font>
+                  <Font name="Montserrat ExtraLight" size="58.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="paneDuzentos" layoutX="687.0" layoutY="550.0" prefHeight="131.0" prefWidth="290.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15 0 0 15;">
+         <children>
+            <Text layoutX="44.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$ 200">
+               <font>
+                  <Font name="Montserrat ExtraLight" size="58.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="paneContinuar" layoutX="747.0" layoutY="773.0" prefHeight="91.0" prefWidth="340.0" style="-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 4);">
+         <children>
+            <Text fill="WHITE" layoutX="101.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Continuar">
+               <font>
+                  <Font name="Montserrat Regular" size="28.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text fill="#737373" layoutX="63.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número da conta">
+         <font>
+            <Font name="Montserrat Bold" size="25.0" />
+         </font>
+      </Text>
+      <Label fx:id="labelNumeroConta" layoutX="63.0" layoutY="482.0" prefHeight="46.0" prefWidth="294.0" text="12186520" textFill="WHITE">
+         <font>
+            <Font name="Montserrat Bold" size="40.0" />
+         </font>
+      </Label>
+      <Text fill="#737373" layoutX="63.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo">
+         <font>
+            <Font name="Montserrat Bold" size="25.0" />
+         </font>
+      </Text>
+      <Label fx:id="labelSaldoAtual" layoutX="63.0" layoutY="349.0" prefHeight="46.0" prefWidth="278.0" text="R$ 380,00" textFill="WHITE">
+         <font>
+            <Font name="Montserrat Bold" size="33.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="39.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logotipo.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="63.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depositar">
+         <font>
+            <Font name="Montserrat SemiBold" size="48.0" />
+         </font>
+      </Text>
+      <Pane fx:id="paneApagar" layoutX="993.0" layoutY="390.0" prefHeight="131.0" prefWidth="94.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0 15 15 0;">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="48.0" layoutX="24.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@simbolo_apagar.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneLimpar" layoutX="993.0" layoutY="550.0" prefHeight="131.0" prefWidth="94.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0 15 15 0;">
+         <children>
+            <ImageView fitHeight="37.0" fitWidth="35.0" layoutX="32.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@simbolo_limpar.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneVoltar" layoutX="378.0" layoutY="773.0" prefHeight="91.0" prefWidth="340.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-border-width: 2;">
+         <children>
+            <Text fill="WHITE" layoutX="142.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Voltar">
+               <font>
+                  <Font name="Montserrat Regular" size="28.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="107.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@simbolo_voltar.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>
