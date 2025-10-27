@@ -2,6 +2,7 @@ com\midoribank\atm\UserDAO.class
 com\midoribank\atm\UserProfile.class
 com\midoribank\atm\DepositarController.class
 com\midoribank\atm\ConfirmarDadosController.class
+com\midoribank\atm\ConclusaoOperacaoController.class
 com\midoribank\atm\SessionManager.class
 com\midoribank\atm\SacarController.class
 module-info.class
@@ -9,3 +10,4 @@ com\midoribank\atm\App.class
 com\midoribank\atm\LoginController.class
 com\midoribank\atm\HomeController.class
 com\midoribank\atm\opcoesLoginController.class
+com\midoribank\atm\DigitarSenhaController.class

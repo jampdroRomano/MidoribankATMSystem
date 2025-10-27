@@ -58,7 +58,7 @@
             <Font size="28.0" />
          </font>
       </Button>
-      <Button fx:id="buttoponto" layoutX="438.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #677388; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;" text="." textFill="WHITE">
+      <Button fx:id="buttonPonto" layoutX="438.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #677388; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;" text="." textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>
@@ -98,11 +98,14 @@
             <Font size="28.0" />
          </font>
       </Button>
-      <Button fx:id="buttoapagar" layoutX="662.0" layoutY="478.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #677388; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;" text="#" textFill="WHITE">
+      <Button fx:id="buttonApagar" layoutX="662.0" layoutY="478.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #677388; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;" text="#" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <PasswordField fx:id="senhaField" layoutX="437.0" layoutY="562.0" prefHeight="61.0" prefWidth="328.0" style="-fx-background-color: #677388; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;" />
+      <PasswordField fx:id="senhaField" layoutX="437.0" layoutY="562.0" prefHeight="61.0" prefWidth="328.0" style="-fx-background-color: #677388; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;">
+         <font>
+            <Font size="28.0" />
+         </font></PasswordField>
    </children>
 </Pane>

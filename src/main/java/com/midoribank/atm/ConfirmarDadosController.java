@@ -18,7 +18,7 @@ public class ConfirmarDadosController {
     @FXML private Label labelTipo;
     @FXML private Label labelValor;
     @FXML private Label labelData;
-    @FXML private Pane paneConfirmar;
+    @FXML private Pane paneConfirmar; // Certifique-se que o fx:id no FXML é este
     @FXML private Pane paneVoltar;
 
     private UserProfile currentUser;
@@ -41,8 +41,8 @@ public class ConfirmarDadosController {
             labelAgencia.setText(currentUser.getAgencia());
             labelConta.setText(currentUser.getNumeroConta());
         }
-        
-        labelTipo.setText(tipoOperacao);
+
+        labelTipo.setText(tipoOperacao != null ? tipoOperacao : "N/D");
         labelValor.setText(String.format("R$ %.2f", valorOperacao));
 
         LocalDate hoje = LocalDate.now();
@@ -51,37 +51,46 @@ public class ConfirmarDadosController {
     }
 
     private void configurarEventos() {
-        paneConfirmar.setOnMouseClicked(e -> handleConfirmar());
-        paneVoltar.setOnMouseClicked(e -> handleVoltar());
-        
-        setupPaneHoverEffects(paneConfirmar);
-        setupPaneHoverEffects(paneVoltar);
-    }
-
-    private void handleConfirmar() {
-        boolean sucesso = currentUser.sacar(valorOperacao);
-
-        if (sucesso) {
-            exibirMensagemInfo("Saque realizado com sucesso!");
-            SessionManager.clearTransaction();
-            try {
-                App.setRoot("home");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            exibirMensagemErro("Ocorreu um erro inesperado. Saldo pode ser insuficiente.");
+        if (paneConfirmar != null) {
+             paneConfirmar.setOnMouseClicked(e -> handleContinuarParaSenha()); // Ação modificada
+             setupPaneHoverEffects(paneConfirmar);
         }
+       if (paneVoltar != null) {
+            paneVoltar.setOnMouseClicked(e -> handleVoltar());
+             setupPaneHoverEffects(paneVoltar);
+       }
     }
 
-    private void handleVoltar() {
+    // Navega para a tela de digitar senha
+    private void handleContinuarParaSenha() {
         try {
-            App.setRoot("sacar");
+            // Garanta que o nome do FXML está correto (sem extensão .fxml)
+            App.setRoot("DigitarSenha"); 
         } catch (IOException e) {
             e.printStackTrace();
+            exibirMensagemErro("Não foi possível carregar a tela de senha.");
         }
     }
-    
+
+    // Volta para a tela anterior (Saque ou Depósito)
+    private void handleVoltar() {
+        try {
+             String telaAnterior = "home"; // Default
+             if ("Saque".equals(tipoOperacao)) {
+                 telaAnterior = "sacar";
+             } else if ("Deposito".equals(tipoOperacao)) { // Previsão para depósito
+                 telaAnterior = "depositar";
+             }
+             // Adicionar mais "else if" para outras operações futuras
+             
+             // Garanta que os nomes dos FXMLs estão corretos
+             App.setRoot(telaAnterior); 
+        } catch (IOException e) {
+            e.printStackTrace();
+             exibirMensagemErro("Não foi possível voltar para a tela anterior.");
+        }
+    }
+
     private void setupPaneHoverEffects(Pane pane) {
         if (pane != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
@@ -96,9 +105,9 @@ public class ConfirmarDadosController {
                 if (pane.getScene() != null) pane.getScene().setCursor(Cursor.DEFAULT);
                 pane.setEffect(null);
             });
-            
+
             pane.setOnMousePressed(e -> pane.setEffect(clickEffect));
-            
+
             pane.setOnMouseReleased(e -> {
                 if (pane.isHover()) {
                     pane.setEffect(hoverEffect);
@@ -109,14 +118,6 @@ public class ConfirmarDadosController {
         }
     }
 
-    private void exibirMensagemInfo(String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucesso");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
-    }
-
     private void exibirMensagemErro(String mensagem) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erro");
@@ -125,3 +126,4 @@ public class ConfirmarDadosController {
         alert.showAndWait();
     }
 }
+
