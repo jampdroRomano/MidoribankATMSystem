@@ -1,30 +1,72 @@
-package com.midoribank.atm;
+package com.midoribank.atm; 
 
-import java.util.HashMap;
-import java.util.Map;
+import com.midoribank.atm.database.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAO {
 
-    private static final Map<String, UserProfile> userProfiles = new HashMap<>();
-
-    static {
-        // Adicionando dados fictícios de cartão (número e PIN de 4 dígitos)
-        userProfiles.put("alvaro@midori.com", new UserProfile("Alvaro Gatao", "2204-5", "0123-1", "alvaro123", 1250.75, "1111222233334444", "1234"));
-        userProfiles.put("jao@midori.com", new UserProfile("Jao", "1234-5", "0123-1", "jao123", 380.00, "5555666677778888", "5678"));
-        userProfiles.put("alemao@midori.com", new UserProfile("Alemao", "5678-9", "0456-2", "alemao123", 5600.20, "9999000011112222", "9012"));
-    }
-
-    // Autentica com email e SENHA DA CONTA (para login)
     public boolean autenticar(String email, String senhaConta) {
-        UserProfile profile = userProfiles.get(email);
-        if (profile != null) {
-            return profile.getSenhaConta().equals(senhaConta);
+        
+        String sql = "SELECT id FROM usuario WHERE email = ? AND senha = ?";
+        
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, senhaConta);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                
+                return rs.next(); 
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao autenticar usuário: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
-    public UserProfile getProfile(String email){
-        return userProfiles.get(email);
+    public UserProfile getProfile(String email) {
+        
+        String sql = "SELECT " +
+                     "  u.nome, u.senha, " +
+                     "  c.agencia, c.numero_conta, c.saldo, " +
+                     "  ca.numero_cartao, ca.senha AS pin_cartao " +
+                     "FROM " +
+                     "  usuario u " +
+                     "JOIN conta c ON u.id = c.usuario_id " +    
+                     "JOIN cartao ca ON c.id = ca.conta_id " +  
+                     "WHERE " +
+                     "  u.email = ?";
+        
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                
+                if (rs.next()) {
+
+                    String nome = rs.getString("nome");
+                    String senhaConta = rs.getString("senha");
+                    String agencia = rs.getString("agencia");
+                    String numeroConta = rs.getString("numero_conta");
+                    double saldo = rs.getDouble("saldo");
+                    String cartao = rs.getString("numero_cartao");
+                    String pin = rs.getString("pin_cartao");
+
+                    return new UserProfile(nome, numeroConta, agencia, senhaConta, saldo, cartao, pin);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar perfil do usuário: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return null; 
     }
 }
-
