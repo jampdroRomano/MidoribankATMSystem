@@ -10,4 +10,5 @@ com\midoribank\atm\App.class
 com\midoribank\atm\LoginController.class
 com\midoribank\atm\HomeController.class
 com\midoribank\atm\opcoesLoginController.class
+com\midoribank\atm\database\ConnectionFactory.class
 com\midoribank\atm\DigitarSenhaController.class

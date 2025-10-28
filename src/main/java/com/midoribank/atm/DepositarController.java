@@ -11,28 +11,17 @@ import javafx.scene.layout.Pane;
 
 public class DepositarController {
 
-    @FXML
-    private Label labelSaldoAtual;
-    @FXML
-    private Label labelNumeroConta;
-    @FXML
-    private TextField valorField;
-    @FXML
-    private Pane paneVinte;
-    @FXML
-    private Pane paneCinquenta;
-    @FXML
-    private Pane paneCem;
-    @FXML
-    private Pane paneDuzentos;
-    @FXML
-    private Pane paneApagar;
-    @FXML
-    private Pane paneLimpar;
-    @FXML
-    private Pane paneContinuar;
-    @FXML
-    private Pane paneVoltar;
+    @FXML private Label labelSaldoAtual;
+    @FXML private Label labelNumeroConta;
+    @FXML private TextField valorField;
+    @FXML private Pane paneVinte;
+    @FXML private Pane paneCinquenta;
+    @FXML private Pane paneCem;
+    @FXML private Pane paneDuzentos;
+    @FXML private Pane paneApagar;
+    @FXML private Pane paneLimpar;
+    @FXML private Pane paneContinuar;
+    @FXML private Pane paneVoltar;
     
     private UserProfile currentUser;
 
@@ -51,7 +40,6 @@ public class DepositarController {
     }
     
     private void configurarEventos() {
-
         paneVinte.setOnMouseClicked(e -> adicionarValor(20.0));
         paneCinquenta.setOnMouseClicked(e -> adicionarValor(50.0));
         paneCem.setOnMouseClicked(e -> adicionarValor(100.0));
@@ -59,7 +47,7 @@ public class DepositarController {
 
         paneApagar.setOnMouseClicked(e -> handleApagar());
         paneLimpar.setOnMouseClicked(e -> valorField.clear());
-        paneContinuar.setOnMouseClicked(e -> handleDeposito());
+        paneContinuar.setOnMouseClicked(e -> handleDeposito()); // <-- É AQUI QUE VAMOS MUDAR
         paneVoltar.setOnMouseClicked(e -> handleVoltar());
         
         setupPaneHoverEffects(paneVinte);
@@ -89,8 +77,17 @@ public class DepositarController {
         }
     }
     
+    private void handleVoltar() {
+        try {
+            App.setRoot("home");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
     private void handleDeposito() {
-        String valorTexto = valorField.getText();
+        String valorTexto = valorField.getText().replace(",", "."); // Boa prática
         if (valorTexto.isEmpty()) {
             exibirMensagemErro("Por favor, insira um valor para depositar.");
             return;
@@ -103,24 +100,18 @@ public class DepositarController {
                 return;
             }
             
-            currentUser.depositar(valor);
-            exibirMensagemInfo("Depósito realizado com sucesso!");
-            carregarDadosUsuario(); 
-            valorField.clear();
+            SessionManager.setCurrentTransaction(valor, "Deposito");
+            
+            App.setRoot("confirmar-operacao");
 
         } catch (NumberFormatException e) {
             exibirMensagemErro("Valor inválido. Por favor, insira apenas números.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            exibirMensagemErro("Não foi possível carregar a tela de confirmação.");
         }
     }
 
-    private void handleVoltar() {
-        try {
-            App.setRoot("home");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
     private void setupPaneHoverEffects(Pane pane) {
         if (pane != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
@@ -150,7 +141,7 @@ public class DepositarController {
         }
     }
 
-  
+    
     private void exibirMensagemErro(String mensagem) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erro na Operação");
@@ -167,4 +158,3 @@ public class DepositarController {
         alert.showAndWait();
     }
 }
-
