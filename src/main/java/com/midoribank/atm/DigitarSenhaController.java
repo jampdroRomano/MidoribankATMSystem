@@ -3,29 +3,23 @@ package com.midoribank.atm;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node; // Usar Node para aceitar Pane ou Button
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Pane;
 
 public class DigitarSenhaController {
 
-    @FXML private PasswordField senhaField; 
-
-    // Botões numéricos
-    @FXML private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    
-    // Botões de Ação (Confirmar/Voltar como Pane no FXML)
-    @FXML private Node paneConfirmar; // Usar Node para aceitar Pane
-    @FXML private Node paneVoltar;    // Usar Node para aceitar Pane
-    
-    // Botões de Edição (se existirem no FXML com estes fx:id)
-    @FXML private Button buttonApagar; // Para o botão '#' ou backspace
-    @FXML private Button buttonPonto;  // Botão '.' - Não usual para PIN, mas incluído se necessário
+    @FXML private PasswordField senhaField;
+    @FXML private Pane button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
+    @FXML private Node paneConfirmar;
+    @FXML private Node paneVoltar;
+    @FXML private Pane buttonApagar;
+    @FXML private Pane buttonC;
 
     private UserProfile currentUser;
-    private final int MAX_SENHA_LENGTH = 4; 
+    private final int MAX_SENHA_LENGTH = 4;
 
     @FXML
     public void initialize() {
@@ -40,61 +34,50 @@ public class DigitarSenhaController {
     }
 
     private void configurarBotoesNumericos() {
-        Button[] buttons = {button0, button1, button2, button3, button4, button5, button6, button7, button8, button9};
-        for (Button btn : buttons) {
-            if (btn != null) {
-                String numero = btn.getText(); // Pega o número do texto do botão
-                btn.setOnAction(e -> adicionarDigito(numero));
-                setupNodeHoverEffects(btn); // Aplica efeito de cor
+        Pane[] panes = {button0, button1, button2, button3, button4, button5, button6, button7, button8, button9};
+        for (int i = 0; i < panes.length; i++) {
+            Pane pane = panes[i];
+            if (pane != null) {
+                final String numero = String.valueOf(i);
+                pane.setOnMouseClicked(e -> adicionarDigito(numero));
+                setupNodeHoverEffects(pane);
             } else {
-                System.err.println("Aviso: Um botão numérico não foi encontrado no FXML.");
+                System.err.println("Aviso: Um painel numérico (button" + i + ") não foi encontrado no FXML.");
             }
         }
     }
-    
+
      private void configurarControles() {
          if (paneConfirmar != null) {
             paneConfirmar.setOnMouseClicked(e -> handleConfirmarSenha());
-            setupNodeHoverEffects(paneConfirmar); // Aplica efeito de cor
+            setupNodeHoverEffects(paneConfirmar);
          } else {
              System.err.println("Aviso: paneConfirmar não encontrado no FXML.");
          }
-         
+
          if (paneVoltar != null) {
             paneVoltar.setOnMouseClicked(e -> handleVoltar());
-             setupNodeHoverEffects(paneVoltar); // Aplica efeito de cor
+             setupNodeHoverEffects(paneVoltar);
          } else {
              System.err.println("Aviso: paneVoltar não encontrado no FXML.");
          }
     }
 
     private void configurarBotoesEdicao() {
-        // Mapeia o botão '#' ou backspace para a função apagar
         if (buttonApagar != null) {
-            buttonApagar.setOnAction(e -> apagarDigito());
+             buttonApagar.setOnMouseClicked(e -> apagarDigito());
             setupNodeHoverEffects(buttonApagar);
         } else {
-             System.err.println("Aviso: buttonApagar não encontrado no FXML (esperado fx:id='buttonApagar').");
+             System.err.println("Aviso: buttonApagar não encontrado no FXML.");
         }
 
-        // Se houver um botão '.' (não comum para PIN, mas tratando o FXML)
-        if (buttonPonto != null) {
-            // Pode adicionar uma ação se necessário, ou desabilitar/remover do FXML
-             buttonPonto.setOnAction(e -> System.out.println("Botão '.' pressionado - ação não definida para PIN."));
-             setupNodeHoverEffects(buttonPonto);
-             // buttonPonto.setDisable(true); // Desabilita se não for usado
+        if (buttonC != null) {
+             buttonC.setOnMouseClicked(e -> limparSenha());
+             setupNodeHoverEffects(buttonC);
         } else {
-             System.err.println("Aviso: buttonPonto não encontrado no FXML (esperado fx:id='buttonPonto').");
+             System.err.println("Aviso: buttonC não encontrado no FXML.");
         }
-        
-        // Se você adicionar um botão Limpar com fx:id="buttonLimpar"
-        // @FXML private Button buttonLimpar; 
-        // if (buttonLimpar != null) {
-        //    buttonLimpar.setOnAction(e -> limparSenha());
-        //    setupNodeHoverEffects(buttonLimpar);
-        // }
     }
-
 
     private void adicionarDigito(String digito) {
         if (senhaField.getText().length() < MAX_SENHA_LENGTH) {
@@ -108,7 +91,7 @@ public class DigitarSenhaController {
             senhaField.setText(currentText.substring(0, currentText.length() - 1));
         }
     }
-    
+
     private void limparSenha() {
         senhaField.clear();
     }
@@ -125,10 +108,10 @@ public class DigitarSenhaController {
              executarOperacao();
         } else {
              exibirMensagemErro("Senha do cartão incorreta!");
-             limparSenha(); 
+             limparSenha();
         }
     }
-    
+
     private void executarOperacao() {
          String tipo = SessionManager.getCurrentTransactionType();
          double valor = SessionManager.getCurrentTransactionAmount();
@@ -136,44 +119,38 @@ public class DigitarSenhaController {
 
          if ("Saque".equals(tipo)) {
              sucesso = currentUser.sacar(valor);
-         } else if ("Deposito".equals(tipo)) { 
+         } else if ("Deposito".equals(tipo)) {
              currentUser.depositar(valor);
-             sucesso = true; 
+             sucesso = true;
          }
-         // Adicionar lógica para outras operações (ex: Transferência) aqui
 
          if (sucesso) {
              try {
-                 // Certifique-se que o nome do FXML está correto
-                 App.setRoot("ConclusaoOperacao"); 
+                 App.setRoot("ConclusaoOperacao");
              } catch (IOException e) {
                  e.printStackTrace();
                  exibirMensagemErro("Não foi possível carregar a tela de conclusão.");
              }
          } else {
-             // Caso raro (ex: saldo insuficiente não detectado antes no Saque)
               if ("Saque".equals(tipo)) {
                  exibirMensagemErro("Saldo insuficiente. Operação cancelada.");
              } else {
                  exibirMensagemErro("Não foi possível completar a operação.");
              }
-             SessionManager.clearTransaction(); 
+             SessionManager.clearTransaction();
              try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
          }
     }
 
     private void handleVoltar() {
         try {
-            // Volta para a tela de confirmar dados
-            // Certifique-se que o nome do FXML está correto
-            App.setRoot("confirmar-operacao"); 
+            App.setRoot("confirmar-operacao");
         } catch (IOException e) {
             e.printStackTrace();
              exibirMensagemErro("Não foi possível voltar para a tela anterior.");
         }
     }
-    
-    // --- Efeitos Visuais (adaptados para Node) ---
+
     private void setupNodeHoverEffects(Node node) {
         if (node != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
@@ -183,11 +160,14 @@ public class DigitarSenhaController {
                 if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
                 node.setEffect(hoverEffect);
             });
+
             node.setOnMouseExited(e -> {
                 if (node.getScene() != null) node.getScene().setCursor(Cursor.DEFAULT);
                 node.setEffect(null);
             });
+
             node.setOnMousePressed(e -> node.setEffect(clickEffect));
+
             node.setOnMouseReleased(e -> {
                 if (node.isHover()) node.setEffect(hoverEffect);
                 else node.setEffect(null);
