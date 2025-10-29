@@ -102,10 +102,10 @@
                   <Font size="28.0" />
                </font>
             </Button>
-            <ImageView fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@btnVoltar.png" />
-               </image>
+             <ImageView fx:id="btnVoltarLogin" fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#handleVoltarClick">
+                <image>
+                    <Image url="@btnVoltar.png" />
+                </image>
             </ImageView>
          </children>
       </Pane>
