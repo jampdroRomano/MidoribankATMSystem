@@ -31,8 +31,6 @@ public class HomeController {
     private Pane paneCartao;
     @FXML
     private Pane paneDetalhes;
-    @FXML
-    private Pane paneSaldo;
 
     private UserProfile currentUser;
 
@@ -59,7 +57,6 @@ public class HomeController {
         paneExtrato.setOnMouseClicked(e -> showInDevelopmentAlert());
         paneCartao.setOnMouseClicked(e -> showInDevelopmentAlert());
         paneDetalhes.setOnMouseClicked(e -> showInDevelopmentAlert());
-        paneSaldo.setOnMouseClicked(e -> showInDevelopmentAlert());
 
         setupPaneHoverEffects(paneSacar);
         setupPaneHoverEffects(paneDepositar);
@@ -68,7 +65,6 @@ public class HomeController {
         setupPaneHoverEffects(paneExtrato);
         setupPaneHoverEffects(paneCartao);
         setupPaneHoverEffects(paneDetalhes);
-        setupPaneHoverEffects(paneSaldo);
     }
     
     private void setupPaneHoverEffects(Pane pane) {
