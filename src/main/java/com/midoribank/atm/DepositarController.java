@@ -47,7 +47,7 @@ public class DepositarController {
 
         paneApagar.setOnMouseClicked(e -> handleApagar());
         paneLimpar.setOnMouseClicked(e -> valorField.clear());
-        paneContinuar.setOnMouseClicked(e -> handleDeposito()); // <-- É AQUI QUE VAMOS MUDAR
+        paneContinuar.setOnMouseClicked(e -> handleDeposito()); 
         paneVoltar.setOnMouseClicked(e -> handleVoltar());
         
         setupPaneHoverEffects(paneVinte);

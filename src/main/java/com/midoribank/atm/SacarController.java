@@ -11,24 +11,17 @@ import javafx.scene.layout.Pane;
 
 public class SacarController {
 
-    @FXML
-    private Label labelSaldoAtual;
-    @FXML
-    private Label labelNumeroConta;
-    @FXML
-    private TextField valorField;
-    @FXML
-    private Pane paneVinte;
-    @FXML
-    private Pane paneCinquenta;
-    @FXML
-    private Pane paneCem;
-    @FXML
-    private Pane paneDuzentos;
-    @FXML
-    private Pane paneContinuar;
-    @FXML
-    private Pane paneCancelar;
+    @FXML private Label labelSaldoAtual;
+    @FXML private Label labelNumeroConta;
+    @FXML private TextField valorField;
+    @FXML private Pane paneVinte;
+    @FXML private Pane paneCinquenta;
+    @FXML private Pane paneCem;
+    @FXML private Pane paneDuzentos;
+    @FXML private Pane paneContinuar;
+    @FXML private Pane paneCancelar;
+    @FXML private Pane paneApagar;
+    @FXML private Pane paneLimpar;
     
     private UserProfile currentUser;
 
@@ -47,11 +40,13 @@ public class SacarController {
     }
     
     private void configurarEventos() {
-        paneVinte.setOnMouseClicked(e -> setValorSaque(20.0));
-        paneCinquenta.setOnMouseClicked(e -> setValorSaque(50.0));
-        paneCem.setOnMouseClicked(e -> setValorSaque(100.0));
-        paneDuzentos.setOnMouseClicked(e -> setValorSaque(200.0));
-
+        paneVinte.setOnMouseClicked(e -> adicionarValor(20.0));
+        paneCinquenta.setOnMouseClicked(e -> adicionarValor(50.0));
+        paneCem.setOnMouseClicked(e -> adicionarValor(100.0));
+        paneDuzentos.setOnMouseClicked(e -> adicionarValor(200.0));
+        
+        paneApagar.setOnMouseClicked(e -> handleApagar());
+        paneLimpar.setOnMouseClicked(e -> valorField.clear());
         paneContinuar.setOnMouseClicked(e -> handleContinuar());
         paneCancelar.setOnMouseClicked(e -> handleCancelar());
         
@@ -61,10 +56,18 @@ public class SacarController {
         setupPaneHoverEffects(paneDuzentos);
         setupPaneHoverEffects(paneContinuar);
         setupPaneHoverEffects(paneCancelar);
+        setupPaneHoverEffects(paneApagar);
+        setupPaneHoverEffects(paneLimpar);
     }
     
-    private void setValorSaque(double valor) {
-        valorField.setText(String.format("%.2f", valor).replace(",", "."));
+        private void adicionarValor(double valor) {
+        String valorAtualTexto = valorField.getText();
+        try {
+            double valorAtual = valorAtualTexto.isEmpty() ? 0 : Double.parseDouble(valorAtualTexto);
+            valorField.setText(String.valueOf(valorAtual + valor));
+        } catch (NumberFormatException e) {
+            valorField.setText(String.valueOf(valor));
+        }
     }
     
     private void handleContinuar() {
@@ -93,6 +96,13 @@ public class SacarController {
         } catch (IOException e) {
             e.printStackTrace();
             exibirMensagemErro("Não foi possível carregar a tela de confirmação.");
+        }
+    }
+    
+        private void handleApagar() {
+        String texto = valorField.getText();
+        if (texto != null && !texto.isEmpty()) {
+            valorField.setText(texto.substring(0, texto.length() - 1));
         }
     }
 
