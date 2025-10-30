@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label; // <-- ADICIONE ESTA LINHA
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView; 
 
@@ -24,6 +25,9 @@ public class LoginController {
     private ImageView btnVoltarLogin; 
 
     private UserDAO userDAO;
+    
+    @FXML
+    private Label esqueciSenhaLabel; // Esta linha agora vai funcionar!
 
     public LoginController() {
         this.userDAO = new UserDAO();
@@ -50,6 +54,26 @@ public class LoginController {
         } else {
              System.err.println("Aviso: btnVoltarLogin não encontrado no FXML.");
         }
+        
+        if (esqueciSenhaLabel != null) {
+	        esqueciSenhaLabel.setOnMouseEntered(e -> {
+	            if (esqueciSenhaLabel.getScene() != null) {
+	                esqueciSenhaLabel.getScene().setCursor(Cursor.HAND);
+	            }
+	        });
+	
+	        esqueciSenhaLabel.setOnMouseExited(e -> {
+	            if (esqueciSenhaLabel.getScene() != null) {
+	                esqueciSenhaLabel.getScene().setCursor(Cursor.DEFAULT);
+	            }
+	        });
+    	}
+    }
+    
+    @FXML
+    private void handleEsqueciMinhaSenha() throws IOException {
+        System.out.println("Iniciando fluxo de recuperação de senha...");
+        App.setRoot("EnviarEmailRecuperacao"); // Chama a primeira tela do fluxo
     }
 
     // Método de clique do botão Voltar 
@@ -182,4 +206,5 @@ public class LoginController {
         alert.setContentText("Esta função ainda está em desenvolvimento.");
         alert.showAndWait();
     }
+    
 }

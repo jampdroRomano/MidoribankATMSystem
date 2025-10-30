@@ -1,3 +1,6 @@
+com\midoribank\atm\VerificarCodigoEmailController.class
+com\midoribank\atm\AlterarSenhaController.class
+com\midoribank\atm\EnviarEmailRecuperacaoController.class
 com\midoribank\atm\UserDAO.class
 com\midoribank\atm\CadastroUsuarioController.class
 com\midoribank\atm\UserProfile.class

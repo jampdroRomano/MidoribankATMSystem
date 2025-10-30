@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530); -fx-background: ;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530); -fx-background: ;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.VerificarCodigoEmailController">
    <children>
       <Pane layoutX="174.0" layoutY="54.0" prefHeight="643.0" prefWidth="703.0" style="-fx-background-color: #27232A; -fx-background-radius: 10;">
          <children>
@@ -54,7 +54,7 @@
             </Text>
             <Pane layoutX="110.0" layoutY="346.0" prefHeight="65.0" prefWidth="482.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                <children>
-                  <TextField fx:id="emailField" prefHeight="65.0" prefWidth="482.0" promptText="000000" style="-fx-background-radius: 10;">
+                  <TextField fx:id="codigoField" prefHeight="65.0" prefWidth="482.0" promptText="000000" style="-fx-background-radius: 10;">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -69,12 +69,12 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="entrarButton" layoutX="111.0" layoutY="483.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Verificar" textFill="WHITE">
+            <Button fx:id="entrarButton" layoutX="111.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleVerificarCodigo" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Verificar" textFill="WHITE">
                <font>
                   <Font size="28.0" />
                </font>
             </Button>
-            <ImageView fx:id="btnVoltarLogin" fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="86.0" onMouseClicked="#handleVoltarClick" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnVoltarLogin" fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="86.0" onMouseClicked="#handleVoltar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Login/btnVoltar.png" />
                </image>
@@ -97,6 +97,11 @@
             <Label layoutX="546.0" layoutY="272.0" text="15:00" textFill="WHITE">
                <font>
                   <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorLabel" layoutX="295.0" layoutY="426.0" prefHeight="17.0" prefWidth="294.0" style="-fx-font-weight: bold;" textFill="#dd0000">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>

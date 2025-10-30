@@ -87,7 +87,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Label layoutX="119.0" layoutY="364.0" text="Esqueci minha senha" textFill="WHITE">
+            <Label fx:id="esqueciSenhaLabel" layoutX="119.0" layoutY="364.0" onMouseClicked="#handleEsqueciMinhaSenha" text="Esqueci minha senha" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
