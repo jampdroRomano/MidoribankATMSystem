@@ -49,21 +49,51 @@
                   <Font size="36.0" />
                </font>
             </Text>
-            <Button fx:id="cadastrarButton" layoutX="111.0" layoutY="582.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Cadastrar" textFill="WHITE">
+            <Button fx:id="cadastrarCartaoButton" layoutX="111.0" layoutY="582.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Cadastrar" textFill="WHITE">
                <font>
                   <Font size="28.0" />
                </font>
             </Button>
-            <ImageView fx:id="btnVoltarCadastrar" fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="84.0" onMouseClicked="#handleVoltarClick" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnVoltarCadastrarCartao" fitHeight="29.0" fitWidth="18.0" layoutX="110.0" layoutY="84.0" onMouseClicked="#handleVoltarClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Cadastro/btnVoltar.png" />
                </image>
             </ImageView>
             <Pane layoutX="214.0" layoutY="160.0" prefHeight="163.0" prefWidth="273.0" style="-fx-background-color: #0DA900; -fx-background-radius: 8;" />
             <Line endX="599.0" layoutX="-7.0" layoutY="447.0" startX="118.0" stroke="#737373" />
-            <Text fill="WHITE" layoutX="111.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="Nome">
+            <Text fill="#b2b0b0" layoutX="111.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="Nome">
                <font>
-                  <Font name="Montserrat Regular" size="22.0" />
+                  <Font name="Montserrat Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="111.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Dados do Cartão">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fill="#b2b0b0" layoutX="110.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="Número">
+               <font>
+                  <Font name="Montserrat Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#b2b0b0" layoutX="110.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="1234 5678 9101 1121">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#b2b0b0" layoutX="111.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="Steph Curry">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#b2b0b0" layoutX="509.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="CVV">
+               <font>
+                  <Font name="Montserrat Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#b2b0b0" layoutX="514.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 200;" text="923">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
                </font>
             </Text>
          </children>
