@@ -18,7 +18,7 @@ public class ConfirmarDadosController {
     @FXML private Label labelTipo;
     @FXML private Label labelValor;
     @FXML private Label labelData;
-    @FXML private Pane paneConfirmar; // Certifique-se que o fx:id no FXML é este
+    @FXML private Pane paneConfirmar; 
     @FXML private Pane paneVoltar;
 
     private UserProfile currentUser;
@@ -52,7 +52,7 @@ public class ConfirmarDadosController {
 
     private void configurarEventos() {
         if (paneConfirmar != null) {
-             paneConfirmar.setOnMouseClicked(e -> handleContinuarParaSenha()); // Ação modificada
+             paneConfirmar.setOnMouseClicked(e -> handleContinuarParaSenha()); 
              setupPaneHoverEffects(paneConfirmar);
         }
        if (paneVoltar != null) {
@@ -61,10 +61,8 @@ public class ConfirmarDadosController {
        }
     }
 
-    // Navega para a tela de digitar senha
     private void handleContinuarParaSenha() {
         try {
-            // Garanta que o nome do FXML está correto (sem extensão .fxml)
             App.setRoot("DigitarSenha"); 
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,18 +70,15 @@ public class ConfirmarDadosController {
         }
     }
 
-    // Volta para a tela anterior (Saque ou Depósito)
     private void handleVoltar() {
         try {
-             String telaAnterior = "home"; // Default
+             String telaAnterior = "home"; 
              if ("Saque".equals(tipoOperacao)) {
                  telaAnterior = "sacar";
-             } else if ("Deposito".equals(tipoOperacao)) { // Previsão para depósito
+             } else if ("Deposito".equals(tipoOperacao)) { 
                  telaAnterior = "depositar";
              }
-             // Adicionar mais "else if" para outras operações futuras
-             
-             // Garanta que os nomes dos FXMLs estão corretos
+
              App.setRoot(telaAnterior); 
         } catch (IOException e) {
             e.printStackTrace();

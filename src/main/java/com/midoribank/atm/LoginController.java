@@ -3,13 +3,13 @@ package com.midoribank.atm;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node; // Import Node
+import javafx.scene.Node; 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.ImageView; // Import ImageView
+import javafx.scene.image.ImageView; 
 
 public class LoginController {
     @FXML
@@ -17,11 +17,11 @@ public class LoginController {
     @FXML
     private PasswordField senhaField;
     @FXML
-    private Button cadastrarButton;
+    private Button cadastrarButton; // Este é o botão que vamos alterar
     @FXML
     private Button entrarButton;
-    @FXML // Add FXML annotation for the ImageView
-    private ImageView btnVoltarLogin; // Add the ImageView field
+    @FXML 
+    private ImageView btnVoltarLogin; 
 
     private UserDAO userDAO;
 
@@ -38,36 +38,57 @@ public class LoginController {
             autenticar();
         });
 
-        cadastrarButton.setOnAction(event -> showInDevelopmentAlert());
+        // ***** MUDANÇA AQUI *****
+        // Antes: cadastrarButton.setOnAction(event -> showInDevelopmentAlert());
+        cadastrarButton.setOnAction(event -> handleAbrirCadastro()); // Agora chama o método para abrir o cadastro
+        // ***** FIM DA MUDANÇA *****
 
-        // Apply effects to buttons
+        // Aplica efeitos aos botões
         setupButtonHoverEffects(entrarButton);
-        setupButtonHoverEffects(cadastrarButton);
+        setupButtonHoverEffects(cadastrarButton); // O efeito de hover agora funciona neste botão também
 
-        // Apply effects to the back button (ImageView)
+        // Aplica efeitos ao botão voltar (ImageView)
         if (btnVoltarLogin != null) {
-             setupNodeHoverEffects(btnVoltarLogin); // Use the new method for Nodes
+             setupNodeHoverEffects(btnVoltarLogin); 
         } else {
              System.err.println("Aviso: btnVoltarLogin não encontrado no FXML.");
         }
     }
 
-    // --- New Method to Handle Back Button Click ---
+    // Método de clique do botão Voltar (permanece)
     @FXML
     private void handleVoltarClick() {
         try {
             System.out.println("Botão Voltar clicado!");
-            App.setRoot("opcoesLogin"); // Navigate back to opcoesLogin
+            App.setRoot("opcoesLogin"); 
         } catch (IOException e) {
             System.err.println("Falha ao carregar opcoesLogin.fxml!");
             e.printStackTrace();
             exibirMensagemErro("Não foi possível voltar para a tela anterior.");
         }
     }
-    // --- End of New Method ---
+    
+    // --- Novo Método para abrir o Cadastro ---
+    /**
+     * Chamado quando o botão "Cadastrar" da tela de Login é clicado.
+     * Navega para a tela de CadastroUsuario.
+     */
+    private void handleAbrirCadastro() {
+        try {
+            System.out.println("Botão 'Cadastrar' clicado! Abrindo tela CadastroUsuario...");
+            App.setRoot("CadastroUsuario"); // Navega para a nova tela de cadastro
+        } catch (IOException e) {
+            System.err.println("Falha ao carregar CadastroUsuario.fxml!");
+            e.printStackTrace();
+            exibirMensagemErro("Não foi possível abrir a tela de cadastro.");
+        }
+    }
+    // --- Fim do Novo Método ---
 
-    // Method for Button effects (remains the same)
+    // ... (O resto do seu LoginController.java permanece igual) ...
+    
     private void setupButtonHoverEffects(Button button) {
+         // ... (método igual ao que você já tem) ...
          if (button != null) {
              ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
              ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
@@ -96,8 +117,8 @@ public class LoginController {
          }
      }
 
-    // --- New Method for Node Effects (like ImageView) ---
      private void setupNodeHoverEffects(Node node) {
+         // ... (método igual ao que você já tem) ...
          if (node != null) {
              ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
              ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
@@ -120,12 +141,10 @@ public class LoginController {
              });
          }
      }
-    // --- End of New Method ---
-
 
     private void autenticar() {
         System.out.println("Método autenticar() iniciado...");
-
+        
         String email = emailField.getText();
         String senha = senhaField.getText();
 
@@ -140,10 +159,10 @@ public class LoginController {
 
         if (autentica) {
             System.out.println("Autenticação bem-sucedida!");
-
+            
             UserProfile userProfile = userDAO.getProfile(email);
             SessionManager.setCurrentUser(userProfile);
-
+            
             try {
                 System.out.println("Carregando tela 'home'...");
                 App.setRoot("home");
@@ -164,7 +183,7 @@ public class LoginController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
-
+    
     private void showInDevelopmentAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informação");

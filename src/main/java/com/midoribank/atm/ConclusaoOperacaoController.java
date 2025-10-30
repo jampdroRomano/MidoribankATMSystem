@@ -14,8 +14,8 @@ public class ConclusaoOperacaoController {
     @FXML private Label labelTituloOperacao;
     @FXML private Label labelSaldoAtual;
     @FXML private Label labelNumeroConta;
-    @FXML private Node paneSim; // Usar Node para aceitar Pane
-    @FXML private Node paneNao; // Usar Node para aceitar Pane
+    @FXML private Node paneSim; 
+    @FXML private Node paneNao; 
 
     private UserProfile currentUser;
     private String tipoOperacao;
@@ -26,7 +26,6 @@ public class ConclusaoOperacaoController {
         this.tipoOperacao = SessionManager.getCurrentTransactionType();
 
         if (currentUser == null || tipoOperacao == null) {
-            // Se não houver dados, volta para home para segurança
             try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
             return;
         }
@@ -36,12 +35,10 @@ public class ConclusaoOperacaoController {
     }
 
     private void configurarTela() {
-        // Ajusta as mensagens com base no tipo de operação
-        labelTituloOperacao.setText(tipoOperacao); // Ex: "Sacar" ou "Depositar"
+        labelTituloOperacao.setText(tipoOperacao); 
         labelMensagemSucesso.setText(tipoOperacao + " concluído com sucesso!");
         labelPergunta.setText("Deseja realizar outro " + tipoOperacao.toLowerCase() + "?");
 
-        // Exibe dados atualizados do usuário
         labelNumeroConta.setText(currentUser.getNumeroConta());
         labelSaldoAtual.setText(String.format("R$ %.2f", currentUser.getSaldo()));
     }
@@ -62,36 +59,31 @@ public class ConclusaoOperacaoController {
         }
     }
 
-    // Ação do botão "Sim"
     private void handleSim() {
-        SessionManager.clearTransaction(); // Limpa dados da transação anterior
-        try {
-            // Volta para a tela da operação realizada (sacar ou depositar)
+        SessionManager.clearTransaction(); 
+        try { 
             if ("Saque".equals(tipoOperacao)) {
                 App.setRoot("sacar");
             } else if ("Deposito".equals(tipoOperacao)) {
                 App.setRoot("depositar");
             }
-            // Adicionar else if para outras operações futuras
             else {
-                 App.setRoot("home"); // Fallback
+                 App.setRoot("home"); 
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Ação do botão "Não"
     private void handleNao() {
-        SessionManager.clearTransaction(); // Limpa dados da transação
+        SessionManager.clearTransaction(); 
         try {
-            App.setRoot("home"); // Volta para a tela principal
+            App.setRoot("home"); 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // --- Efeitos Visuais (adaptados para Node) ---
     private void setupNodeHoverEffects(Node node) {
         if (node != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);

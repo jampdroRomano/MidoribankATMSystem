@@ -8,7 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
-import com.midoribank.atm.database.ContaDAO; // *** MUDANÇA 1: Importar o "Funcionário do Dinheiro" ***
+import com.midoribank.atm.database.ContaDAO; 
 
 public class DigitarSenhaController {
 
@@ -22,13 +22,12 @@ public class DigitarSenhaController {
     private UserProfile currentUser;
     private final int MAX_SENHA_LENGTH = 4;
     
-    private ContaDAO contaDAO; // *** MUDANÇA 2: Dar ao "Chefe" acesso ao funcionário ***
+    private ContaDAO contaDAO; 
 
     @FXML
     public void initialize() {
         this.currentUser = SessionManager.getCurrentUser();
         
-        // *** MUDANÇA 3: "Contratar" o funcionário quando a tela abre ***
         this.contaDAO = new ContaDAO(); 
         
         if (currentUser == null) {
@@ -39,12 +38,6 @@ public class DigitarSenhaController {
         configurarControles();
         configurarBotoesEdicao();
     }
-
-    // ... (Todos os seus métodos de configurarBotoes, adicionarDigito, apagarDigito,
-    // ...  limparSenha, handleVoltar, setupNodeHoverEffects, e exibirMensagemErro
-    // ...  continuam EXATAMENTE IGUAIS. Não precisa mexer neles.) ...
-    
-    // (Vou colar eles aqui para você poder copiar tudo de uma vez)
 
     private void configurarBotoesNumericos() {
         Pane[] panes = {button0, button1, button2, button3, button4, button5, button6, button7, button8, button9};
@@ -160,8 +153,7 @@ public class DigitarSenhaController {
 
         if (currentUser.validarSenhaCartao(senhaDigitada)) {
             executarOperacao();
-        } else {
-            // 3. Senha INCORRETA!
+        } else {    
             exibirMensagemErro("Senha do cartão incorreta!");
             limparSenha();
         }
