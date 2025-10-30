@@ -171,7 +171,7 @@
             </InnerShadow>
          </effect>
       </Text>
-      <Label fx:id="labelTitulo" layoutX="349.0" layoutY="105.0" text="Digite a senha do seu cartão" textFill="WHITE">
+      <Label layoutX="349.0" layoutY="105.0" text="Digite a senha do seu cartão" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>

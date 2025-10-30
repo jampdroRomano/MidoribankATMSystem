@@ -23,26 +23,22 @@ public class CadastroUsuarioController {
 
     @FXML
     public void initialize() {
-        // Configura os cliques dos botões
+        // ... (código do initialize permanece o mesmo) ...
         if (cadastrarButton != null) {
             cadastrarButton.setOnAction(e -> handleCadastroClick());
-            setupButtonHoverEffects(cadastrarButton); // Adiciona efeito ao botão
+            setupButtonHoverEffects(cadastrarButton); 
         } else {
             System.err.println("Aviso: cadastrarButton não encontrado no FXML.");
         }
 
         if (btnVoltarCadastrar != null) {
             btnVoltarCadastrar.setOnMouseClicked(e -> handleVoltarClick());
-            setupNodeHoverEffects(btnVoltarCadastrar); // Adiciona efeito à imagem
+            setupNodeHoverEffects(btnVoltarCadastrar); 
         } else {
             System.err.println("Aviso: btnVoltarCadastrar não encontrado no FXML.");
         }
     }
 
-    /**
-     * Chamado quando o botão "Cadastrar" é clicado.
-     * Valida os campos e navega para a próxima tela.
-     */
     private void handleCadastroClick() {
         String nome = nomeField.getText();
         String email = emailFieldCadastro.getText();
@@ -58,16 +54,15 @@ public class CadastroUsuarioController {
         // 2. Validação de senha
         if (!senha.equals(confirmacaoSenha)) {
             exibirMensagemErro("As senhas não conferem!");
-            // Limpa os campos de senha para o usuário digitar novamente
             senhaFieldCadastro.clear();
             confirmeSenha.clear();
             return;
         }
 
-        // Se passou nas validações:
-        System.out.println("Validação de cadastro OK. Navegando para CadastroCartao...");
-        // (Aqui virá a lógica de salvar no banco de dados no futuro)
-        // Você pode salvar os dados no SessionManager se precisar deles na próxima tela
+        // --- MUDANÇA: Salvar dados na Sessão ---
+        System.out.println("Validação de cadastro OK. Salvando dados na sessão...");
+        SessionManager.setCadastroUsuario(nome, email, senha);
+        // --- Fim da Mudança ---
 
         try {
             // Navega para a tela de cadastro de cartão
@@ -78,10 +73,6 @@ public class CadastroUsuarioController {
         }
     }
 
-    /**
-     * Chamado quando a imagem "Voltar" é clicada.
-     * Retorna para a tela de Login.
-     */
     @FXML
     private void handleVoltarClick() {
         try {
@@ -93,7 +84,7 @@ public class CadastroUsuarioController {
         }
     }
 
-    // --- Métodos de UI (copiados e adaptados do LoginController) ---
+    // --- Métodos de UI (Copie e cole os métodos setup... e exibir... que você já tem) ---
 
     private void setupButtonHoverEffects(Button button) {
         if (button != null) {

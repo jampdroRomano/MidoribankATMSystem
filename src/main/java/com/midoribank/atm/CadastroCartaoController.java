@@ -1,6 +1,7 @@
 package com.midoribank.atm;
 
 import java.io.IOException;
+import java.util.Random; // Importe o Random
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,36 +16,58 @@ public class CadastroCartaoController {
     @FXML private Button cadastrarCartaoButton;
     @FXML private ImageView btnVoltarCadastrarCartao;
     
+    // --- MUDANÇA: Labels que vamos preencher ---
     @FXML private Label numeroCartao;
     @FXML private Label nomeCartao;
     @FXML private Label cvvCartao;
+    // --- Fim da Mudança ---
 
     @FXML
     public void initialize() {
         System.out.println("CadastroCartaoController inicializado.");
+
+        // --- MUDANÇA: Preenche os dados na tela ---
+        // 1. Busca o nome salvo na etapa anterior
+        String nomeUsuario = SessionManager.getCadastroNome();
+        if (nomeUsuario != null && !nomeUsuario.isEmpty()) {
+            nomeCartao.setText(nomeUsuario.toUpperCase());
+        } else {
+            nomeCartao.setText("NOME DO CLIENTE"); // Texto padrão
+        }
+        
+        // 2. Gera dados aleatórios para o cartão
+        Random rand = new Random();
+        String numAleatorio = String.format("%04d %04d %04d %04d", 
+            rand.nextInt(10000), 
+            rand.nextInt(10000), 
+            rand.nextInt(10000), 
+            rand.nextInt(10000));
+        
+        String cvvAleatorio = String.format("%03d", rand.nextInt(1000));
+        
+        // 3. Define os textos dos labels
+        numeroCartao.setText(numAleatorio);
+        cvvCartao.setText(cvvAleatorio);
+        // --- Fim da Mudança ---
         
         if (cadastrarCartaoButton != null) {
-            // Define a ação do botão Cadastrar
             cadastrarCartaoButton.setOnAction(e -> handleCadastroCartaoClick());
             setupButtonHoverEffects(cadastrarCartaoButton);
         }
         
         if (btnVoltarCadastrarCartao != null) {
-            // Define a ação do botão Voltar
             btnVoltarCadastrarCartao.setOnMouseClicked(e -> handleVoltarClick());
             setupNodeHoverEffects(btnVoltarCadastrarCartao);
         }
     }
 
-    /**
-     * Chamado ao clicar em "Cadastrar" na tela do Cartão.
-     * Navega para a nova tela de CRIAÇÃO de senha.
-     */
     private void handleCadastroCartaoClick() {
+        // --- MUDANÇA: Salva os dados gerados na sessão ---
+        SessionManager.setCadastroCartao(numeroCartao.getText(), cvvCartao.getText());
+        // --- Fim da Mudança ---
+
         System.out.println("Navegando para a tela de criação de senha (CadastroSenha)...");
         try {
-            // **IMPORTANTE**: Navega para a nova tela "CadastroSenha"
-            // (Isso assume que você criou a pasta e o FXML como no passo 2)
             App.setRoot("CadastroSenha"); 
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,10 +75,6 @@ public class CadastroCartaoController {
         }
     }
     
-    /**
-     * Chamado ao clicar em "Voltar" na tela do Cartão.
-     * Volta para a tela de Cadastro de Usuário.
-     */
     @FXML
     private void handleVoltarClick() {
         try {
@@ -67,13 +86,13 @@ public class CadastroCartaoController {
         }
     }
     
-    // --- Métodos de UI (Efeitos de Hover/Clique) ---
-
+    // --- Métodos de UI (Copie e cole os métodos setup... e exibir... que você já tem) ---
+    // (Omitidos aqui por brevidade, mas cole-os do arquivo anterior)
+    
     private void setupButtonHoverEffects(Button button) {
         if (button != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
             ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
             button.setOnMouseEntered(e -> {
                 if (button.getScene() != null) button.getScene().setCursor(Cursor.HAND);
                 button.setEffect(hoverEffect);
@@ -94,7 +113,6 @@ public class CadastroCartaoController {
         if (node != null) {
             ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
             ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
             node.setOnMouseEntered(e -> {
                 if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
                 node.setEffect(hoverEffect);

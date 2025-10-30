@@ -8,7 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text; // Importe o Text
+import javafx.scene.control.Label; // <-- MUDANÇA: Trocado de Text para Label
 
 public class CadastroSenhaController {
 
@@ -18,31 +18,32 @@ public class CadastroSenhaController {
     @FXML private Node paneVoltar;
     @FXML private Pane buttonApagar;
     @FXML private Pane buttonC;
-    @FXML private Text labelTitulo; // Para alterar o texto
+    
+    // --- MUDANÇA CRÍTICA: Corrigido de Text para Label ---
+    @FXML private Label labelTitulo; 
+    // --- Fim da Mudança ---
 
-    // (A validação de 54 dígitos parecia um erro de digitação, então usei 4)
+    // (Vou assumir que a validação de "54 dígitos" foi um erro de digitação e usar 4)
     private final int MAX_SENHA_LENGTH = 4; 
     
-    // Armazena a primeira senha digitada
     private String senhaCadastroTemporaria = null;
 
     @FXML
     public void initialize() {
         System.out.println("CadastroSenhaController inicializado.");
         
-        // Define o texto inicial para o cadastro
         if (labelTitulo != null) {
             labelTitulo.setText("Digite uma senha para o seu cartão");
-            labelTitulo.setLayoutX(320.0); // Ajusta a posição para o texto novo
+            labelTitulo.setLayoutX(320.0); // Ajusta a posição
         }
 
-        // Configura todos os botões
         configurarBotoesNumericos();
         configurarControles();
         configurarBotoesEdicao();
     }
     
-    // Configura os botões numéricos (Copiado do seu DigitarSenhaController)
+    // ... (configurarBotoesNumericos, configurarControles, configurarBotoesEdicao) ...
+    
     private void configurarBotoesNumericos() {
         Pane[] panes = {button0, button1, button2, button3, button4, button5, button6, button7, button8, button9};
         for (int i = 0; i < panes.length; i++) {
@@ -55,7 +56,6 @@ public class CadastroSenhaController {
         }
     }
 
-    // Configura os botões de controle (Confirmar e Voltar)
     private void configurarControles() {
         if (paneConfirmar != null) {
             paneConfirmar.setOnMouseClicked(e -> handleConfirmarSenha());
@@ -67,7 +67,6 @@ public class CadastroSenhaController {
         }
     }
 
-    // Configura os botões de edição (Apagar e Limpar)
     private void configurarBotoesEdicao() {
         if (buttonApagar != null) {
             buttonApagar.setOnMouseClicked(e -> apagarDigito());
@@ -80,8 +79,7 @@ public class CadastroSenhaController {
     }
 
     /**
-     * Chamado quando a imagem "Voltar" é clicada.
-     * Retorna para a tela de Cadastro de Cartão.
+     * Botão Voltar: Volta para a tela de Cadastro de Cartão.
      */
     @FXML
     private void handleVoltarClick() {
@@ -95,7 +93,7 @@ public class CadastroSenhaController {
     }
 
     /**
-     * Lógica principal: ou captura a primeira senha ou confirma a segunda.
+     * Lógica de criar e confirmar a senha em duas etapas.
      */
     @FXML
     private void handleConfirmarSenha() {
@@ -103,41 +101,36 @@ public class CadastroSenhaController {
 
         if (senhaCadastroTemporaria == null) {
             // ETAPA 1: Criando a primeira senha
-            
-            // Validação de 4 dígitos
             if (senhaDigitada.length() != MAX_SENHA_LENGTH) {
                 exibirMensagemErro("A senha deve ter " + MAX_SENHA_LENGTH + " dígitos.");
                 return;
             }
-            
-            // Armazena a primeira senha
             this.senhaCadastroTemporaria = senhaDigitada;
-            
-            // Muda o label como você pediu
             labelTitulo.setText("Digite novamente a senha");
-            labelTitulo.setLayoutX(340.0); // Ajusta posição do novo texto
+            labelTitulo.setLayoutX(340.0); // Ajusta posição
             limparSenha();
             
         } else {
             // ETAPA 2: Confirmando a senha
-            
             if (senhaDigitada.equals(this.senhaCadastroTemporaria)) {
                 // SUCESSO!
-                System.out.println("Senha criada com sucesso (temporariamente)!");
-                // (Futuramente, aqui você salvaria a senha no banco de dados)
+                System.out.println("Senha criada com sucesso!");
                 
+                // --- MUDANÇA: Salva a senha final e "commita" o cadastro ---
+                SessionManager.setCadastroSenhaCartao(senhaDigitada);
+                SessionManager.salvarCadastroCompletoNoBanco(); // Simula o salvamento no DB
+                // --- Fim da Mudança ---
+
                 exibirMensagemInfo("Sucesso", "Cadastro realizado! Faça o login.");
                 
                 try {
-                    App.setRoot("Login"); // Envia para a tela de Login
+                    App.setRoot("Login"); // Manda para o Login
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                // FALHA NA CONFIRMAÇÃO
+                // FALHA
                 exibirMensagemErro("As senhas não conferem! Tente novamente.");
-                
-                // Reinicia o processo
                 this.senhaCadastroTemporaria = null;
                 labelTitulo.setText("Digite uma senha para o seu cartão");
                 labelTitulo.setLayoutX(320.0);
@@ -146,7 +139,7 @@ public class CadastroSenhaController {
         }
     }
     
-    // --- Métodos de UI e Alertas ---
+    // --- Métodos de UI e Alertas (Sem alteração) ---
 
     private void adicionarDigito(String digito) {
         if (senhaField.getText().length() < MAX_SENHA_LENGTH) {
