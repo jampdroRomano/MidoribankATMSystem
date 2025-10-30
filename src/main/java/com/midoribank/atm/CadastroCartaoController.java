@@ -15,7 +15,6 @@ public class CadastroCartaoController {
     @FXML private Button cadastrarCartaoButton;
     @FXML private ImageView btnVoltarCadastrarCartao;
     
-    // Labels para (futuramente) receber dados da tela anterior
     @FXML private Label numeroCartao;
     @FXML private Label nomeCartao;
     @FXML private Label cvvCartao;
@@ -23,19 +22,15 @@ public class CadastroCartaoController {
     @FXML
     public void initialize() {
         System.out.println("CadastroCartaoController inicializado.");
-
-        // (No futuro, você pode pegar os dados do usuário do SessionManager aqui)
-        // UserProfile user = SessionManager.getCurrentUser();
-        // if (user != null) {
-        //    nomeCartao.setText(user.getNome());
-        // }
         
         if (cadastrarCartaoButton != null) {
+            // Define a ação do botão Cadastrar
             cadastrarCartaoButton.setOnAction(e -> handleCadastroCartaoClick());
             setupButtonHoverEffects(cadastrarCartaoButton);
         }
         
         if (btnVoltarCadastrarCartao != null) {
+            // Define a ação do botão Voltar
             btnVoltarCadastrarCartao.setOnMouseClicked(e -> handleVoltarClick());
             setupNodeHoverEffects(btnVoltarCadastrarCartao);
         }
@@ -43,15 +38,14 @@ public class CadastroCartaoController {
 
     /**
      * Chamado ao clicar em "Cadastrar" na tela do Cartão.
-     * Navega para a tela de Digitar Senha.
+     * Navega para a nova tela de CRIAÇÃO de senha.
      */
     private void handleCadastroCartaoClick() {
-        // (Aqui virá a lógica de salvar os dados do cartão no banco)
-        
-        System.out.println("Cadastro de Cartão Concluído. Navegando para Digitar Senha...");
+        System.out.println("Navegando para a tela de criação de senha (CadastroSenha)...");
         try {
-            // (Você pode querer salvar no SessionManager que está em modo "Cadastro")
-            App.setRoot("DigitarSenha"); 
+            // **IMPORTANTE**: Navega para a nova tela "CadastroSenha"
+            // (Isso assume que você criou a pasta e o FXML como no passo 2)
+            App.setRoot("CadastroSenha"); 
         } catch (IOException e) {
             e.printStackTrace();
             exibirMensagemErro("Não foi possível carregar a tela de senha.");

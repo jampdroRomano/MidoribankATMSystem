@@ -3,6 +3,7 @@ com\midoribank\atm\CadastroUsuarioController.class
 com\midoribank\atm\UserProfile.class
 com\midoribank\atm\DepositarController.class
 com\midoribank\atm\CadastroCartaoController.class
+com\midoribank\atm\CadastroSenhaController.class
 com\midoribank\atm\ConfirmarDadosController.class
 com\midoribank\atm\ConclusaoOperacaoController.class
 com\midoribank\atm\database\ContaDAO.class

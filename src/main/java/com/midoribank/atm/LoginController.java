@@ -17,7 +17,7 @@ public class LoginController {
     @FXML
     private PasswordField senhaField;
     @FXML
-    private Button cadastrarButton; // Este é o botão que vamos alterar
+    private Button cadastrarButton; 
     @FXML
     private Button entrarButton;
     @FXML 
@@ -38,14 +38,11 @@ public class LoginController {
             autenticar();
         });
 
-        // ***** MUDANÇA AQUI *****
-        // Antes: cadastrarButton.setOnAction(event -> showInDevelopmentAlert());
-        cadastrarButton.setOnAction(event -> handleAbrirCadastro()); // Agora chama o método para abrir o cadastro
-        // ***** FIM DA MUDANÇA *****
+        cadastrarButton.setOnAction(event -> handleAbrirCadastro()); 
 
         // Aplica efeitos aos botões
         setupButtonHoverEffects(entrarButton);
-        setupButtonHoverEffects(cadastrarButton); // O efeito de hover agora funciona neste botão também
+        setupButtonHoverEffects(cadastrarButton); 
 
         // Aplica efeitos ao botão voltar (ImageView)
         if (btnVoltarLogin != null) {
@@ -55,7 +52,7 @@ public class LoginController {
         }
     }
 
-    // Método de clique do botão Voltar (permanece)
+    // Método de clique do botão Voltar 
     @FXML
     private void handleVoltarClick() {
         try {
@@ -68,7 +65,6 @@ public class LoginController {
         }
     }
     
-    // --- Novo Método para abrir o Cadastro ---
     /**
      * Chamado quando o botão "Cadastrar" da tela de Login é clicado.
      * Navega para a tela de CadastroUsuario.
@@ -83,12 +79,8 @@ public class LoginController {
             exibirMensagemErro("Não foi possível abrir a tela de cadastro.");
         }
     }
-    // --- Fim do Novo Método ---
-
-    // ... (O resto do seu LoginController.java permanece igual) ...
     
     private void setupButtonHoverEffects(Button button) {
-         // ... (método igual ao que você já tem) ...
          if (button != null) {
              ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
              ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
@@ -118,7 +110,6 @@ public class LoginController {
      }
 
      private void setupNodeHoverEffects(Node node) {
-         // ... (método igual ao que você já tem) ...
          if (node != null) {
              ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
              ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);

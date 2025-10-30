@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -10,14 +9,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #63596c, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.DigitarSenhaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #63596c, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.CadastroSenhaController">
    <children>
+   
+      <Text fx:id="labelTitulo" fill="WHITE" layoutX="328.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Texto Padrão que será Trocado">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      
       <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="39.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@logotipo.png" />
+            <Image url="@../DigitarSenha/logotipo.png" /> 
          </image>
       </ImageView>
-      <Pane fx:id="paneConfirmar" layoutX="530.0" layoutY="597.0" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 4);">
+      <Pane fx:id="paneConfirmar" layoutX="531.0" layoutY="590.0" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 4);">
          <children>
             <Text fill="WHITE" layoutX="78.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Confirmar">
                <font>
@@ -26,7 +32,7 @@
             </Text>
          </children>
       </Pane>
-      <Pane fx:id="paneVoltar" layoutX="248.0" layoutY="597.0" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-border-width: 2;">
+      <Pane fx:id="paneVoltar" layoutX="249.0" layoutY="590.0" prefHeight="70.0" prefWidth="271.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-border-width: 2;">
          <children>
             <Text fill="WHITE" layoutX="100.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Voltar">
                <font>
@@ -35,7 +41,7 @@
             </Text>
          </children>
       </Pane>
-      <PasswordField fx:id="senhaField" layoutX="363.0" layoutY="465.0" prefHeight="61.0" prefWidth="324.0" style="-fx-background-color: #677388; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;">
+      <PasswordField fx:id="senhaField" layoutX="363.0" layoutY="476.0" prefHeight="61.0" prefWidth="324.0" style="-fx-background-color: #677388; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4); -fx-background-radius: 8;">
          <font>
             <Font size="28.0" />
          </font></PasswordField>
@@ -171,10 +177,5 @@
             </InnerShadow>
          </effect>
       </Text>
-      <Label fx:id="labelTitulo" layoutX="349.0" layoutY="105.0" text="Digite a senha do seu cartão" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
    </children>
 </Pane>

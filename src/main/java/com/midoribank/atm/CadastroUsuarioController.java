@@ -10,7 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent; // Necessário para o clique no ImageView
+import javafx.scene.input.MouseEvent; 
 
 public class CadastroUsuarioController {
 
