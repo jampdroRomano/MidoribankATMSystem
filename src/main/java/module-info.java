@@ -6,5 +6,8 @@ module com.midoribank.atm {
     requires java.sql;
 
     opens com.midoribank.atm to javafx.fxml;
+
+    opens com.midoribank.atm.controllers to javafx.fxml;
+
     exports com.midoribank.atm;
 }
