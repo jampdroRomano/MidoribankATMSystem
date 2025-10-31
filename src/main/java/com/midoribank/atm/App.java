@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -12,17 +13,33 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static StackPane rootPane;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("splash"), 1050, 750);
-        scene.setFill(Color.web("#29252D"));
+        rootPane = new StackPane();
+
+        rootPane.setStyle("-fx-background-color: #29252D;");
+        Parent splashScreen = loadFXML("splash");
+        rootPane.getChildren().add(splashScreen);
+
+        scene = new Scene(rootPane, 1050, 750);
         stage.setScene(scene);
         stage.show();
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        Parent newScreen = loadFXML(fxml);
+
+        if (rootPane.getChildren().isEmpty()) {
+            rootPane.getChildren().add(newScreen);
+        } else {
+            rootPane.getChildren().set(0, newScreen);
+        }
+    }
+
+    public static StackPane getRootPane() {
+        return rootPane;
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -36,5 +53,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

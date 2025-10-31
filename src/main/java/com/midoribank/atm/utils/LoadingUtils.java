@@ -3,10 +3,6 @@ package com.midoribank.atm.utils;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import com.midoribank.atm.App;
 import com.midoribank.atm.controllers.LoadingController;
 
@@ -14,41 +10,42 @@ import java.util.concurrent.CompletableFuture;
 
 public class LoadingUtils {
 
-    private static Stage loadingStage;
+    private static Parent loadingNode;
     private static LoadingController controller;
+
+    static {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/midoribank/atm/loading/loading.fxml"));
+            loadingNode = loader.load();
+            controller = loader.getController();
+            loadingNode.setMouseTransparent(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            loadingNode = null;
+            controller = null;
+        }
+    }
 
     public static void showLoading(String message) {
         Platform.runLater(() -> {
-            try {
-                if (loadingStage == null) {
-                    loadingStage = new Stage();
-                    loadingStage.initStyle(StageStyle.TRANSPARENT);
-                    loadingStage.initModality(Modality.APPLICATION_MODAL);
-
-                    FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/midoribank/atm/loading/loading.fxml"));
-                    Parent root = loader.load();
-                    controller = loader.getController();
-
-                    Scene scene = new Scene(root);
-                    scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
-                    loadingStage.setScene(scene);
-                }
-
+            if (loadingNode != null) {
                 if (controller != null) {
                     controller.setLoadingText(message);
                 }
 
-                loadingStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
+                if (!App.getRootPane().getChildren().contains(loadingNode)) {
+                    App.getRootPane().getChildren().add(loadingNode);
+                }
+            } else {
+                System.err.println("Erro: loadingNode não pôde ser carregado.");
             }
         });
     }
 
     public static void hideLoading() {
         Platform.runLater(() -> {
-            if (loadingStage != null) {
-                loadingStage.hide();
+            if (loadingNode != null) {
+                App.getRootPane().getChildren().remove(loadingNode);
             }
         });
     }
