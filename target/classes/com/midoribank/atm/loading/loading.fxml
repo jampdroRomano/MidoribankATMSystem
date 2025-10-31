@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.LoadingController">
+
+<Pane prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.LoadingController">
    <children>
-      <AnchorPane layoutX="325.0" layoutY="225.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #1a472a; -fx-background-radius: 20;">
+      <Pane layoutX="325.0" layoutY="225.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #29252D; -fx-background-radius: 20;">
          <children>
-            <ImageView fitHeight="120.0" fitWidth="300.0" layoutX="50.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="300.0" layoutX="136.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@logotipo.png" />
+                  <Image url="@LogoSplash.png" />
                </image>
             </ImageView>
-            <ProgressIndicator layoutX="162.5" layoutY="180.0" prefHeight="60.0" prefWidth="75.0" style="-fx-progress-color: white;" />
-            <Label fx:id="loadingLabel" alignment="CENTER" layoutX="0.0" layoutY="255.0" prefHeight="30.0" prefWidth="400.0" text="Processando..." textFill="WHITE">
+            <ProgressIndicator layoutX="174.0" layoutY="177.0" prefHeight="60.0" prefWidth="75.0" style="-fx-progress-color: #14FF00;" />
+            <Label fx:id="loadingLabel" alignment="CENTER" layoutX="127.0" layoutY="249.0" prefHeight="30.0" prefWidth="147.0" text="Processando..." textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </children>
-      </AnchorPane>
+      </Pane>
    </children>
-</AnchorPane>
+</Pane>
