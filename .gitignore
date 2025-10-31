@@ -1,1 +1,25 @@
 out/*
+/target/
+# Arquivos de Log
+*.log
+logs/
+
+# Configurações de IDE específicas do usuário
+# (VS Code, NetBeans, Eclipse, IntelliJ)
+.vscode/
+.idea/
+nbproject/private/
+*.nbuser
+*.user
+.project
+.classpath
+.settings/
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
+*~
+
+# Arquivos de ambiente (se você externalizar senhas)
+*.env
+config.properties

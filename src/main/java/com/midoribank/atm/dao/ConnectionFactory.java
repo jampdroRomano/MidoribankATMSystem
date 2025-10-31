@@ -7,9 +7,9 @@ import java.sql.Statement;
 
 public class ConnectionFactory {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/midoribank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-    private static final String DB_USER = "midori";
-    private static final String DB_PASSWORD = "senha_segura123";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/midoribank?useSSL=false&serverTimezone=UTC";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "1234";
 
     public static Connection getConnection() {
         try {
