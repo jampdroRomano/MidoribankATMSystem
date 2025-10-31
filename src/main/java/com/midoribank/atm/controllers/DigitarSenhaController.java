@@ -1,8 +1,10 @@
 package com.midoribank.atm.controllers;
 
 import com.midoribank.atm.App;
-import com.midoribank.atm.services.SessionManager;
+import com.midoribank.atm.dao.ContaDAO;
 import com.midoribank.atm.models.UserProfile;
+import com.midoribank.atm.services.SessionManager;
+import com.midoribank.atm.utils.CriptografiaUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -11,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
-import com.midoribank.atm.dao.ContaDAO;
 
 public class DigitarSenhaController {
 
@@ -154,7 +155,10 @@ public class DigitarSenhaController {
             return;
         }
 
-        if (currentUser.validarSenhaCartao(senhaDigitada)) {
+        String senhaHashBanco = currentUser.getSenhaCartaoHash();
+        boolean senhaCorreta = CriptografiaUtils.checkPassword(senhaDigitada, senhaHashBanco);
+
+        if (senhaCorreta) {
             executarOperacao();
         } else {
             exibirMensagemErro("Senha do cartão incorreta!");
@@ -184,7 +188,7 @@ public class DigitarSenhaController {
 
         } else if ("Deposito".equals(tipo)) {
 
-             if (valor <= 0) {
+            if (valor <= 0) {
                 exibirMensagemErro("Valor de depósito deve ser positivo.");
                 SessionManager.clearTransaction();
                 try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
