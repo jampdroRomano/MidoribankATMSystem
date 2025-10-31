@@ -1,18 +1,14 @@
 package com.midoribank.atm.controllers;
 
 import com.midoribank.atm.App;
-import com.midoribank.atm.services.SessionManager;
 import com.midoribank.atm.models.UserProfile;
+import com.midoribank.atm.services.SessionManager;
 import com.midoribank.atm.utils.AnimationUtils;
-import com.midoribank.atm.utils.LoadingUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 
 public class DepositarController {
@@ -36,7 +32,6 @@ public class DepositarController {
         this.currentUser = SessionManager.getCurrentUser();
         carregarDadosUsuario();
         configurarEventos();
-        iniciarAnimacoes();
     }
 
     private void carregarDadosUsuario() {
@@ -47,65 +42,33 @@ public class DepositarController {
     }
 
     private void configurarEventos() {
-        paneVinte.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneVinte);
-            adicionarValor(20.0);
-        });
-        
-        paneCinquenta.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneCinquenta);
-            adicionarValor(50.0);
-        });
-        
-        paneCem.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneCem);
-            adicionarValor(100.0);
-        });
-        
-        paneDuzentos.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneDuzentos);
-            adicionarValor(200.0);
-        });
+        paneVinte.setOnMouseClicked(e -> adicionarValor(20.0));
+        paneCinquenta.setOnMouseClicked(e -> adicionarValor(50.0));
+        paneCem.setOnMouseClicked(e -> adicionarValor(100.0));
+        paneDuzentos.setOnMouseClicked(e -> adicionarValor(200.0));
 
-        paneApagar.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneApagar);
-            handleApagar();
-        });
-        
-        paneLimpar.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneLimpar);
-            AnimationUtils.shake(valorField);
-            valorField.clear();
-        });
-        
-        paneContinuar.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneContinuar);
-            handleDeposito();
-        });
-        
-        paneVoltar.setOnMouseClicked(e -> {
-            AnimationUtils.buttonClickAnimation(paneVoltar);
-            handleVoltar();
-        });
+        paneApagar.setOnMouseClicked(e -> handleApagar());
+        paneLimpar.setOnMouseClicked(e -> valorField.clear());
+        paneContinuar.setOnMouseClicked(e -> handleDeposito());
+        paneVoltar.setOnMouseClicked(e -> handleVoltar());
 
-        setupPaneHoverEffects(paneVinte);
-        setupPaneHoverEffects(paneCinquenta);
-        setupPaneHoverEffects(paneCem);
-        setupPaneHoverEffects(paneDuzentos);
-        setupPaneHoverEffects(paneApagar);
-        setupPaneHoverEffects(paneLimpar);
-        setupPaneHoverEffects(paneContinuar);
-        setupPaneHoverEffects(paneVoltar);
+        AnimationUtils.setupNodeHoverEffects(paneVinte);
+        AnimationUtils.setupNodeHoverEffects(paneCinquenta);
+        AnimationUtils.setupNodeHoverEffects(paneCem);
+        AnimationUtils.setupNodeHoverEffects(paneDuzentos);
+        AnimationUtils.setupNodeHoverEffects(paneApagar);
+        AnimationUtils.setupNodeHoverEffects(paneLimpar);
+        AnimationUtils.setupNodeHoverEffects(paneContinuar);
+        AnimationUtils.setupNodeHoverEffects(paneVoltar);
     }
 
     private void adicionarValor(double valor) {
         String valorAtualTexto = valorField.getText();
         try {
             double valorAtual = valorAtualTexto.isEmpty() ? 0 : Double.parseDouble(valorAtualTexto);
-            double novoValor = valorAtual + valor;
-            valorField.setText(String.format("%.2f", novoValor));
+            valorField.setText(String.valueOf(valorAtual + valor));
         } catch (NumberFormatException e) {
-            valorField.setText(String.format("%.2f", valor));
+            valorField.setText(String.valueOf(valor));
         }
     }
 
@@ -128,7 +91,6 @@ public class DepositarController {
     private void handleDeposito() {
         String valorTexto = valorField.getText().replace(",", ".");
         if (valorTexto.isEmpty()) {
-            AnimationUtils.errorAnimation(valorField);
             exibirMensagemErro("Por favor, insira um valor para depositar.");
             return;
         }
@@ -136,63 +98,19 @@ public class DepositarController {
         try {
             double valor = Double.parseDouble(valorTexto);
             if (valor <= 0) {
-                AnimationUtils.errorAnimation(valorField);
                 exibirMensagemErro("O valor do depósito deve ser positivo.");
                 return;
             }
 
-            if (valor % 10 != 0) {
-                AnimationUtils.errorAnimation(valorField);
-                exibirMensagemErro("O valor deve ser múltiplo de R$ 10,00.");
-                return;
-            }
-
-            AnimationUtils.successAnimation(paneContinuar);
             SessionManager.setCurrentTransaction(valor, "Deposito");
 
-            LoadingUtils.runWithLoading("Processando depósito...", () -> {
-                javafx.application.Platform.runLater(() -> {
-                    try {
-                        Thread.sleep(1000);
-                        App.setRoot("confirmar-operacao");
-                    } catch (InterruptedException | IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            });
+            App.setRoot("confirmar-operacao");
 
         } catch (NumberFormatException e) {
-            AnimationUtils.errorAnimation(valorField);
             exibirMensagemErro("Valor inválido. Por favor, insira apenas números.");
-        }
-    }
-
-    private void setupPaneHoverEffects(Pane pane) {
-        if (pane != null) {
-            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
-            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
-            pane.setOnMouseEntered(e -> {
-                if (pane.getScene() != null) pane.getScene().setCursor(Cursor.HAND);
-                pane.setEffect(hoverEffect);
-            });
-
-            pane.setOnMouseExited(e -> {
-                if (pane.getScene() != null) pane.getScene().setCursor(Cursor.DEFAULT);
-                pane.setEffect(null);
-            });
-
-            pane.setOnMousePressed(e -> {
-                pane.setEffect(clickEffect);
-            });
-
-            pane.setOnMouseReleased(e -> {
-                if (pane.isHover()) {
-                    pane.setEffect(hoverEffect);
-                } else {
-                    pane.setEffect(null);
-                }
-            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            exibirMensagemErro("Não foi possível carregar a tela de confirmação.");
         }
     }
 
@@ -202,28 +120,5 @@ public class DepositarController {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }
-
-    private void exibirMensagemInfo(String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucesso");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
-    }
-
-    private void iniciarAnimacoes() {
-        Node[] quickButtons = {paneVinte, paneCinquenta, paneCem, paneDuzentos};
-        AnimationUtils.staggeredFadeIn(quickButtons, 100, 400);
-        
-        AnimationUtils.slideInFromTop(valorField, 500);
-        AnimationUtils.slideInFromLeft(labelSaldoAtual, 600);
-        AnimationUtils.slideInFromLeft(labelNumeroConta, 700);
-        
-        AnimationUtils.fadeIn(paneContinuar, 800);
-        AnimationUtils.fadeIn(paneVoltar, 900);
-        
-        AnimationUtils.scaleIn(paneApagar, 500);
-        AnimationUtils.scaleIn(paneLimpar, 600);
     }
 }

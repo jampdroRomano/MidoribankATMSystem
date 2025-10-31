@@ -4,14 +4,13 @@ import com.midoribank.atm.App;
 import com.midoribank.atm.dao.ContaDAO;
 import com.midoribank.atm.models.UserProfile;
 import com.midoribank.atm.services.SessionManager;
+import com.midoribank.atm.utils.AnimationUtils;
 import com.midoribank.atm.utils.CriptografiaUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 
 public class DigitarSenhaController {
@@ -50,7 +49,7 @@ public class DigitarSenhaController {
             if (pane != null) {
                 final String numero = String.valueOf(i);
                 pane.setOnMouseClicked(e -> adicionarDigito(numero));
-                setupNodeHoverEffects(pane);
+                AnimationUtils.setupNodeHoverEffects(pane);
             } else {
                 System.err.println("Aviso: Um painel numérico (button" + i + ") não foi encontrado no FXML.");
             }
@@ -60,14 +59,14 @@ public class DigitarSenhaController {
     private void configurarControles() {
         if (paneConfirmar != null) {
             paneConfirmar.setOnMouseClicked(e -> handleConfirmarSenha());
-            setupNodeHoverEffects(paneConfirmar);
+            AnimationUtils.setupNodeHoverEffects(paneConfirmar);
         } else {
             System.err.println("Aviso: paneConfirmar não encontrado no FXML.");
         }
 
         if (paneVoltar != null) {
             paneVoltar.setOnMouseClicked(e -> handleVoltar());
-            setupNodeHoverEffects(paneVoltar);
+            AnimationUtils.setupNodeHoverEffects(paneVoltar);
         } else {
             System.err.println("Aviso: paneVoltar não encontrado no FXML.");
         }
@@ -76,14 +75,14 @@ public class DigitarSenhaController {
     private void configurarBotoesEdicao() {
         if (buttonApagar != null) {
             buttonApagar.setOnMouseClicked(e -> apagarDigito());
-            setupNodeHoverEffects(buttonApagar);
+            AnimationUtils.setupNodeHoverEffects(buttonApagar);
         } else {
             System.err.println("Aviso: buttonApagar não encontrado no FXML.");
         }
 
         if (buttonC != null) {
             buttonC.setOnMouseClicked(e -> limparSenha());
-            setupNodeHoverEffects(buttonC);
+            AnimationUtils.setupNodeHoverEffects(buttonC);
         } else {
             System.err.println("Aviso: buttonC não encontrado no FXML.");
         }
@@ -112,30 +111,6 @@ public class DigitarSenhaController {
         } catch (IOException e) {
             e.printStackTrace();
             exibirMensagemErro("Não foi possível voltar para a tela anterior.");
-        }
-    }
-
-    private void setupNodeHoverEffects(Node node) {
-        if (node != null) {
-            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
-            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
-            node.setOnMouseEntered(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
-                node.setEffect(hoverEffect);
-            });
-
-            node.setOnMouseExited(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.DEFAULT);
-                node.setEffect(null);
-            });
-
-            node.setOnMousePressed(e -> node.setEffect(clickEffect));
-
-            node.setOnMouseReleased(e -> {
-                if (node.isHover()) node.setEffect(hoverEffect);
-                else node.setEffect(null);
-            });
         }
     }
 

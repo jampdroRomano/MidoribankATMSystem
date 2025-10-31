@@ -18,7 +18,7 @@ public class ContaDAO {
         this.connection = connection;
     }
 
-    public int cadastrarConta(int usuarioId, String agencia, String numeroConta) {
+    public int cadastrarConta(int usuarioId, String agencia, String numeroConta, double saldoInicial) {
         String sql = "INSERT INTO conta (usuario_id, agencia, numero_conta, saldo) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -26,7 +26,7 @@ public class ContaDAO {
             stmt.setInt(1, usuarioId);
             stmt.setString(2, agencia);
             stmt.setString(3, numeroConta);
-            stmt.setDouble(4, 0.0);
+            stmt.setDouble(4, saldoInicial);
 
             int rowsAffected = stmt.executeUpdate();
 

@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.control.Button;
+import javafx.scene.Cursor;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -231,5 +233,52 @@ public class AnimationUtils {
         
         ParallelTransition pt = new ParallelTransition(rt, ft);
         pt.play();
+    }
+    public static void setupButtonHoverEffects(Button button) {
+        if (button != null) {
+            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
+            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
+
+            button.setOnMouseEntered(e -> {
+                if (button.getScene() != null) button.getScene().setCursor(Cursor.HAND);
+                button.setEffect(hoverEffect);
+            });
+
+            button.setOnMouseExited(e -> {
+                if (button.getScene() != null) button.getScene().setCursor(Cursor.DEFAULT);
+                button.setEffect(null);
+            });
+
+            button.setOnMousePressed(e -> button.setEffect(clickEffect));
+
+            button.setOnMouseReleased(e -> {
+                if (button.isHover()) button.setEffect(hoverEffect);
+                else button.setEffect(null);
+            });
+        }
+    }
+
+    public static void setupNodeHoverEffects(Node node) {
+        if (node != null) {
+            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
+            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
+
+            node.setOnMouseEntered(e -> {
+                if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
+                node.setEffect(hoverEffect);
+            });
+
+            node.setOnMouseExited(e -> {
+                if (node.getScene() != null) node.getScene().setCursor(Cursor.DEFAULT);
+                node.setEffect(null);
+            });
+
+            node.setOnMousePressed(e -> node.setEffect(clickEffect));
+
+            node.setOnMouseReleased(e -> {
+                if (node.isHover()) node.setEffect(hoverEffect);
+                else node.setEffect(null);
+            });
+        }
     }
 }
