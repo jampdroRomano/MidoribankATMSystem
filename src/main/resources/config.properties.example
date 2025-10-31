@@ -1,0 +1,6 @@
+# Arquivo de exemplo. Copie este conteúdo para um novo arquivo chamado 'config.properties'
+# e preencha com suas próprias credenciais do Google (use uma Senha de App).
+# O arquivo 'config.properties' real está no .gitignore por segurança.
+
+GMAIL_USER=seu-email-aqui@gmail.com
+GMAIL_PASSWORD=sua-senha-de-app-16-letras-aqui

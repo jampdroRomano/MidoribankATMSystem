@@ -22,4 +22,4 @@ Thumbs.db
 
 # Arquivos de ambiente (se você externalizar senhas)
 *.env
-config.properties
+/src/main/resources/config.properties

@@ -2,15 +2,16 @@ package com.midoribank.atm.controllers;
 
 import com.midoribank.atm.App;
 import com.midoribank.atm.services.SessionManager;
+import com.midoribank.atm.utils.AnimationUtils;
+import com.midoribank.atm.utils.LoadingUtils;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.layout.Pane;
 
 public class CadastroSenhaController {
 
@@ -20,17 +21,13 @@ public class CadastroSenhaController {
     @FXML private Node paneVoltar;
     @FXML private Pane buttonApagar;
     @FXML private Pane buttonC;
-
     @FXML private Label labelTitulo;
 
     private final int MAX_SENHA_LENGTH = 4;
-
     private String senhaCadastroTemporaria = null;
 
     @FXML
     public void initialize() {
-        System.out.println("CadastroSenhaController inicializado.");
-
         if (labelTitulo != null) {
             labelTitulo.setText("Digite uma senha para o seu cartão");
             labelTitulo.setLayoutX(320.0);
@@ -48,7 +45,7 @@ public class CadastroSenhaController {
             if (pane != null) {
                 final String numero = String.valueOf(i);
                 pane.setOnMouseClicked(e -> adicionarDigito(numero));
-                setupNodeHoverEffects(pane);
+                AnimationUtils.setupNodeHoverEffects(pane);
             }
         }
     }
@@ -56,29 +53,28 @@ public class CadastroSenhaController {
     private void configurarControles() {
         if (paneConfirmar != null) {
             paneConfirmar.setOnMouseClicked(e -> handleConfirmarSenha());
-            setupNodeHoverEffects(paneConfirmar);
+            AnimationUtils.setupNodeHoverEffects(paneConfirmar);
         }
         if (paneVoltar != null) {
             paneVoltar.setOnMouseClicked(e -> handleVoltarClick());
-            setupNodeHoverEffects(paneVoltar);
+            AnimationUtils.setupNodeHoverEffects(paneVoltar);
         }
     }
 
     private void configurarBotoesEdicao() {
         if (buttonApagar != null) {
             buttonApagar.setOnMouseClicked(e -> apagarDigito());
-            setupNodeHoverEffects(buttonApagar);
+            AnimationUtils.setupNodeHoverEffects(buttonApagar);
         }
         if (buttonC != null) {
             buttonC.setOnMouseClicked(e -> limparSenha());
-            setupNodeHoverEffects(buttonC);
+            AnimationUtils.setupNodeHoverEffects(buttonC);
         }
     }
 
     @FXML
     private void handleVoltarClick() {
         try {
-            System.out.println("Botão Voltar (Cadastro Senha) clicado!");
             App.setRoot("CadastroCartao");
         } catch (IOException e) {
             System.err.println("Falha ao carregar CadastroCartao.fxml!");
@@ -91,7 +87,6 @@ public class CadastroSenhaController {
         String senhaDigitada = senhaField.getText();
 
         if (senhaCadastroTemporaria == null) {
-
             if (senhaDigitada.length() != MAX_SENHA_LENGTH) {
                 exibirMensagemErro("A senha deve ter " + MAX_SENHA_LENGTH + " dígitos.");
                 return;
@@ -102,23 +97,27 @@ public class CadastroSenhaController {
             limparSenha();
 
         } else {
-
             if (senhaDigitada.equals(this.senhaCadastroTemporaria)) {
-
-                System.out.println("Senha criada com sucesso!");
-
                 SessionManager.setCadastroSenhaCartao(senhaDigitada);
-                SessionManager.salvarCadastroCompletoNoBanco();
 
-                exibirMensagemInfo("Sucesso", "Cadastro realizado! Faça o login.");
+                LoadingUtils.runWithLoading("Finalizando cadastro...", () -> {
+                    boolean sucesso = SessionManager.salvarCadastroCompletoNoBanco();
 
-                try {
-                    App.setRoot("Login");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    Platform.runLater(() -> {
+                        if(sucesso) {
+                            exibirMensagemInfo("Sucesso", "Cadastro realizado! Faça o login.");
+                            try {
+                                App.setRoot("Login");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            exibirMensagemErro("Falha crítica no cadastro. Tente novamente mais tarde.");
+                        }
+                    });
+                });
+
             } else {
-
                 exibirMensagemErro("As senhas não conferem! Tente novamente.");
                 this.senhaCadastroTemporaria = null;
                 labelTitulo.setText("Digite uma senha para o seu cartão");
@@ -143,27 +142,6 @@ public class CadastroSenhaController {
 
     private void limparSenha() {
         senhaField.clear();
-    }
-
-    private void setupNodeHoverEffects(Node node) {
-        if (node != null) {
-            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
-            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
-            node.setOnMouseEntered(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
-                node.setEffect(hoverEffect);
-            });
-            node.setOnMouseExited(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.DEFAULT);
-                node.setEffect(null);
-            });
-            node.setOnMousePressed(e -> node.setEffect(clickEffect));
-            node.setOnMouseReleased(e -> {
-                if (node.isHover()) node.setEffect(hoverEffect);
-                else node.setEffect(null);
-            });
-        }
     }
 
     private void exibirMensagemErro(String mensagem) {

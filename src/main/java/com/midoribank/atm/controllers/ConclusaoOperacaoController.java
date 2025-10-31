@@ -1,14 +1,13 @@
 package com.midoribank.atm.controllers;
 
 import com.midoribank.atm.App;
-import com.midoribank.atm.services.SessionManager;
 import com.midoribank.atm.models.UserProfile;
+import com.midoribank.atm.services.SessionManager;
+import com.midoribank.atm.utils.AnimationUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 
 public class ConclusaoOperacaoController {
 
@@ -49,16 +48,16 @@ public class ConclusaoOperacaoController {
     private void configurarEventos() {
         if (paneSim != null) {
             paneSim.setOnMouseClicked(e -> handleSim());
-            setupNodeHoverEffects(paneSim);
+            AnimationUtils.setupNodeHoverEffects(paneSim);
         } else {
-             System.err.println("Aviso: paneSim não encontrado no FXML.");
+            System.err.println("Aviso: paneSim não encontrado no FXML.");
         }
 
         if (paneNao != null) {
             paneNao.setOnMouseClicked(e -> handleNao());
-            setupNodeHoverEffects(paneNao);
+            AnimationUtils.setupNodeHoverEffects(paneNao);
         } else {
-             System.err.println("Aviso: paneNao não encontrado no FXML.");
+            System.err.println("Aviso: paneNao não encontrado no FXML.");
         }
     }
 
@@ -71,7 +70,7 @@ public class ConclusaoOperacaoController {
                 App.setRoot("depositar");
             }
             else {
-                 App.setRoot("home");
+                App.setRoot("home");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,27 +83,6 @@ public class ConclusaoOperacaoController {
             App.setRoot("home");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void setupNodeHoverEffects(Node node) {
-        if (node != null) {
-            ColorAdjust hoverEffect = new ColorAdjust(0, 0, -0.1, 0);
-            ColorAdjust clickEffect = new ColorAdjust(0, 0, -0.25, 0);
-
-            node.setOnMouseEntered(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.HAND);
-                node.setEffect(hoverEffect);
-            });
-            node.setOnMouseExited(e -> {
-                if (node.getScene() != null) node.getScene().setCursor(Cursor.DEFAULT);
-                node.setEffect(null);
-            });
-            node.setOnMousePressed(e -> node.setEffect(clickEffect));
-            node.setOnMouseReleased(e -> {
-                if (node.isHover()) node.setEffect(hoverEffect);
-                else node.setEffect(null);
-            });
         }
     }
 }

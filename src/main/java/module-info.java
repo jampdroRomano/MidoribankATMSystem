@@ -4,6 +4,8 @@ module com.midoribank.atm {
     requires javafx.base;
     requires javafx.graphics;
     requires java.sql;
+    requires jbcrypt;
+    requires jakarta.mail;
 
     opens com.midoribank.atm to javafx.fxml;
 

@@ -1,6 +1,7 @@
 package com.midoribank.atm.services;
 
 import com.midoribank.atm.models.UserProfile;
+import java.util.Random;
 
 public class SessionManager {
 
@@ -11,6 +12,10 @@ public class SessionManager {
     private static String cadastroNome;
     private static String cadastroEmail;
     private static String cadastroSenhaConta;
+
+    private static String cadastroAgencia;
+    private static String cadastroNumeroConta;
+
     private static String cadastroNumeroCartao;
     private static String cadastroCVV;
     private static String cadastroSenhaCartao;
@@ -54,6 +59,10 @@ public class SessionManager {
     public static void setCadastroCartao(String numeroCartao, String cvv) {
         cadastroNumeroCartao = numeroCartao;
         cadastroCVV = cvv;
+
+        Random rand = new Random();
+        cadastroAgencia = String.format("%04d", rand.nextInt(10000));
+        cadastroNumeroConta = String.format("%05d-%d", rand.nextInt(100000), rand.nextInt(10));
     }
 
     public static void setCadastroSenhaCartao(String senhaCartao) {
@@ -68,22 +77,26 @@ public class SessionManager {
         cadastroNome = null;
         cadastroEmail = null;
         cadastroSenhaConta = null;
+        cadastroAgencia = null;
+        cadastroNumeroConta = null;
         cadastroNumeroCartao = null;
         cadastroCVV = null;
         cadastroSenhaCartao = null;
     }
 
-    public static void salvarCadastroCompletoNoBanco() {
-        System.out.println("--- SALVANDO NO BANCO (Simulação) ---");
-        System.out.println("Nome: " + cadastroNome);
-        System.out.println("Email: " + cadastroEmail);
-        System.out.println("Senha Conta: " + cadastroSenhaConta);
-        System.out.println("Cartão: " + cadastroNumeroCartao);
-        System.out.println("CVV: " + cadastroCVV);
-        System.out.println("Senha Cartão: " + cadastroSenhaCartao);
-        System.out.println("-------------------------------------");
+    public static boolean salvarCadastroCompletoNoBanco() {
+        CadastroService cadastroService = new CadastroService();
 
-        clearCadastroData();
+        boolean sucesso = cadastroService.realizarCadastroCompleto(
+                cadastroNome, cadastroEmail, cadastroSenhaConta,
+                cadastroAgencia, cadastroNumeroConta,
+                cadastroNumeroCartao, cadastroCVV, cadastroSenhaCartao
+        );
+
+        if (sucesso) {
+            clearCadastroData();
+        }
+
+        return sucesso;
     }
-
 }
