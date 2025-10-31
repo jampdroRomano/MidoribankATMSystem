@@ -18,21 +18,21 @@ public class CadastroService {
             conn = ConnectionFactory.getConnection();
             conn.setAutoCommit(false);
 
-            UserDAO userDAO = new UserDAO(conn);
-            ContaDAO contaDAO = new ContaDAO(conn);
-            CartaoDAO cartaoDAO = new CartaoDAO(conn);
+            UserDAO userDAO = new UserDAO();
+            ContaDAO contaDAO = new ContaDAO();
+            CartaoDAO cartaoDAO = new CartaoDAO();
 
-            int usuarioId = userDAO.cadastrarUsuario(nome, email, senhaConta);
+            int usuarioId = userDAO.cadastrarUsuario(nome, email, senhaConta, conn);
             if (usuarioId == -1) {
                 throw new SQLException("Falha ao cadastrar usuário.");
             }
 
-            int contaId = contaDAO.cadastrarConta(usuarioId, agencia, numeroConta, 0.0);
+            int contaId = contaDAO.cadastrarConta(usuarioId, agencia, numeroConta, 0.0, conn);
             if (contaId == -1) {
                 throw new SQLException("Falha ao cadastrar conta.");
             }
 
-            int cartaoId = cartaoDAO.cadastrarCartao(numeroCartao, cvv, senhaCartao, contaId);
+            int cartaoId = cartaoDAO.cadastrarCartao(numeroCartao, cvv, senhaCartao, contaId, conn);
             if (cartaoId == -1) {
                 throw new SQLException("Falha ao cadastrar cartão.");
             }

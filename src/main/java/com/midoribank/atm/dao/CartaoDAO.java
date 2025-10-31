@@ -9,16 +9,10 @@ import java.sql.Statement;
 
 public class CartaoDAO {
 
-    private Connection connection;
-
-    public CartaoDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    public int cadastrarCartao(String numeroCartao, String cvv, String senhaCartao, int contaId) {
+    public int cadastrarCartao(String numeroCartao, String cvv, String senhaCartao, int contaId, Connection conn) {
         String sql = "INSERT INTO cartao (numero_cartao, cvv, senha, conta_id) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             String senhaHash = CriptografiaUtils.hashPassword(senhaCartao);
 

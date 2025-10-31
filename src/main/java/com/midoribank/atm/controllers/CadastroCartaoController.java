@@ -29,7 +29,8 @@ public class CadastroCartaoController {
         }
 
         Random rand = new Random();
-        String numAleatorio = String.format("%04d %04d %04d %04d",
+
+        String numAleatorio = String.format("%04d%04d%04d%04d",
                 rand.nextInt(10000),
                 rand.nextInt(10000),
                 rand.nextInt(10000),

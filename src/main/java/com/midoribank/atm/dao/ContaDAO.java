@@ -8,20 +8,10 @@ import java.sql.Statement;
 
 public class ContaDAO {
 
-    private Connection connection;
-
-    public ContaDAO() {
-        this.connection = ConnectionFactory.getConnection();
-    }
-
-    public ContaDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    public int cadastrarConta(int usuarioId, String agencia, String numeroConta, double saldoInicial) {
+    public int cadastrarConta(int usuarioId, String agencia, String numeroConta, double saldoInicial, Connection conn) {
         String sql = "INSERT INTO conta (usuario_id, agencia, numero_conta, saldo) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, usuarioId);
             stmt.setString(2, agencia);
