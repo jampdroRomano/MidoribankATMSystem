@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch MidoribankATM",
+            "request": "launch",
+            "mainClass": "com.midoribank.atm.App",
+            "projectName": "atm",
+            "vmArgs": "--module-path /Users/alvarocarlisbino/Documents/javafx-sdk-17.0.17/lib --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

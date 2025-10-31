@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #63596c, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.DigitarSenhaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #63596c, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.DigitarSenhaController">
    <children>
       <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="39.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>

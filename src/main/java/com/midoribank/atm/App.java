@@ -8,18 +8,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class App extends Application { 
+public class App extends Application {
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("opcoesLogin"), 1050, 750);
+        scene = new Scene(loadFXML("splash"), 1050, 750);
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
