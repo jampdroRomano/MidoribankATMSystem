@@ -8,27 +8,25 @@ import com.midoribank.atm.utils.AnimationUtils;
 import com.midoribank.atm.utils.LoadingUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class TransferenciaController {
 
+    @FXML private Pane rootPane;
     @FXML private TextField fieldAgencia;
+    @FXML private TextField fieldDigitoAgencia;
     @FXML private TextField fieldConta;
-    @FXML private TextField fieldDigito;
-    @FXML private TextField fieldCpfCnpj;
-    @FXML private ComboBox<String> comboTipoConta;
+    @FXML private TextField fieldDigitoConta;
 
     @FXML private Pane paneContinuar;
     @FXML private Pane paneVoltar;
 
     @FXML private Label errorLabelAgencia;
+    @FXML private Label errorLabelDigitoAgencia;
     @FXML private Label errorLabelConta;
-    @FXML private Label errorLabelDigito;
-    @FXML private Label errorLabelCpfCnpj;
-    @FXML private Label errorLabelTipoConta;
+    @FXML private Label errorLabelDigitoConta;
     @FXML private Label labelErroGeral;
 
     @FXML private Label labelNumeroConta;
@@ -63,10 +61,9 @@ public class TransferenciaController {
 
     private void limparErros() {
         errorLabelAgencia.setVisible(false);
+        errorLabelDigitoAgencia.setVisible(false);
         errorLabelConta.setVisible(false);
-        errorLabelDigito.setVisible(false);
-        errorLabelCpfCnpj.setVisible(false);
-        errorLabelTipoConta.setVisible(false);
+        errorLabelDigitoConta.setVisible(false);
         labelErroGeral.setVisible(false);
     }
 
@@ -79,24 +76,19 @@ public class TransferenciaController {
             errorLabelAgencia.setVisible(true);
             valido = false;
         }
+        if (fieldDigitoAgencia.getText().trim().isEmpty()) {
+            errorLabelDigitoAgencia.setText("Dígito é obrigatório.");
+            errorLabelDigitoAgencia.setVisible(true);
+            valido = false;
+        }
         if (fieldConta.getText().trim().isEmpty()) {
             errorLabelConta.setText("Conta é obrigatória.");
             errorLabelConta.setVisible(true);
             valido = false;
         }
-        if (fieldDigito.getText().trim().isEmpty()) {
-            errorLabelDigito.setText("Dígito é obrigatório.");
-            errorLabelDigito.setVisible(true);
-            valido = false;
-        }
-        if (fieldCpfCnpj.getText().trim().isEmpty()) {
-            errorLabelCpfCnpj.setText("CPF/CNPJ é obrigatório.");
-            errorLabelCpfCnpj.setVisible(true);
-            valido = false;
-        }
-        if (comboTipoConta.getValue() == null) {
-            errorLabelTipoConta.setText("Tipo é obrigatório.");
-            errorLabelTipoConta.setVisible(true);
+        if (fieldDigitoConta.getText().trim().isEmpty()) {
+            errorLabelDigitoConta.setText("Dígito é obrigatório.");
+            errorLabelDigitoConta.setVisible(true);
             valido = false;
         }
 
@@ -116,18 +108,16 @@ public class TransferenciaController {
             return;
         }
 
-        String agencia = fieldAgencia.getText().trim();
-        String conta = fieldConta.getText().trim();
-        String digito = fieldDigito.getText().trim();
-        String numeroContaCompleto = conta + "-" + digito;
+        String agencia = fieldAgencia.getText().trim() + "-" + fieldDigitoAgencia.getText().trim();
+        String conta = fieldConta.getText().trim() + "-" + fieldDigitoConta.getText().trim();
 
-        if (agencia.equals(currentUser.getAgencia()) && numeroContaCompleto.equals(currentUser.getNumeroConta())) {
+        if (agencia.equals(currentUser.getAgencia()) && conta.equals(currentUser.getNumeroConta())) {
             exibirErroGeral("Você não pode transferir para a sua própria conta.");
             return;
         }
 
         LoadingUtils.runWithLoading("Verificando conta...", () -> {
-            return contaDAO.getProfileByConta(agencia, numeroContaCompleto);
+            return contaDAO.getProfileByConta(agencia, conta);
         }).thenAccept(contaDestino -> {
             if (contaDestino != null) {
                 SessionManager.setContaDestino(contaDestino);

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -13,22 +10,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.TransferenciaController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.TransferenciaController">
    <children>
-      <Label layoutX="448.0" layoutY="156.0" text="Preencha os dados da conta" textFill="WHITE">
+      <Label layoutX="448.0" layoutY="209.0" text="Preencha os dados da conta" textFill="WHITE">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Pane layoutX="355.0" layoutY="238.0" prefHeight="69.0" prefWidth="635.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="357.0" layoutY="322.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField fx:id="fieldAgencia" prefHeight="69.0" prefWidth="635.0" promptText="Insira o numero da agência" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldAgencia" prefHeight="69.0" prefWidth="381.0" promptText="Insira o numero da agência" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
          </children></Pane>
-      <Pane layoutX="356.0" layoutY="356.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="358.0" layoutY="440.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
             <TextField fx:id="fieldConta" prefHeight="69.0" prefWidth="381.0" promptText="Insira o numero da conta" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
@@ -36,57 +33,39 @@
                </font>
             </TextField>
          </children></Pane>
-      <Pane layoutX="748.0" layoutY="356.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="750.0" layoutY="440.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField fx:id="fieldDigito" prefHeight="69.0" prefWidth="241.0" promptText="- 0 " style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldDigitoConta" prefHeight="69.0" prefWidth="241.0" promptText="- 0 " style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
          </children></Pane>
-      <Pane layoutX="356.0" layoutY="475.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="750.0" layoutY="321.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField fx:id="fieldCpfCnpj" prefHeight="69.0" prefWidth="381.0" promptText="Insira CPF ou CNPJ" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldDigitoAgencia" prefHeight="69.0" prefWidth="241.0" promptText="- 0 " style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
-                  <Font size="24.0" />
+                  <Font size="18.0" />
                </font>
             </TextField>
          </children>
       </Pane>
-      <Pane layoutX="748.0" layoutY="476.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
-         <children>
-            <ComboBox fx:id="comboTipoConta" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: transparent; -fx-background-radius: 8;">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Conta Corrente" />
-                     <String fx:value="Conta Poupança" />
-                     <String fx:value="Conta Salário" />
-                  </FXCollections>
-               </items>
-            </ComboBox>
-         </children>
-      </Pane>
-      <Text fill="WHITE" layoutX="362.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="agência">
+      <Text fill="WHITE" layoutX="364.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="agência">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="363.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="conta">
+      <Text fill="WHITE" layoutX="365.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="conta">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="751.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="dígito">
+      <Text fill="WHITE" layoutX="753.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="dígito conta">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="751.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="tipo de conta">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="361.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="CPF ou CNPJ">
+      <Text fill="WHITE" layoutX="753.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="dígito agência">
          <font>
             <Font size="16.0" />
          </font>
@@ -168,35 +147,29 @@
             </InnerShadow>
          </effect>
       </Text>
-      <Label fx:id="errorLabelAgencia" layoutX="360.0" layoutY="313.0" prefHeight="20.0" prefWidth="624.0" textFill="RED">
+      <Label fx:id="errorLabelAgencia" layoutX="362.0" layoutY="390.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabelConta" layoutX="360.0" layoutY="432.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
+      <Label fx:id="errorLabelConta" layoutX="362.0" layoutY="509.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabelDigito" layoutX="748.0" layoutY="432.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
+      <Label fx:id="errorLabelDigitoConta" layoutX="750.0" layoutY="509.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabelTipoConta" layoutX="751.0" layoutY="555.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
+      <Label fx:id="errorLabelDigitoAgencia" layoutX="753.0" layoutY="390.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabelCpfCnpj" layoutX="359.0" layoutY="555.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
+      <Label fx:id="labelErroGeral" alignment="CENTER" layoutX="359.0" layoutY="552.0" prefHeight="20.0" prefWidth="628.0" textFill="RED" visible="false">
          <font>
             <Font size="14.0" />
-         </font>
-      </Label>
-
-      <Label fx:id="labelErroGeral" alignment="CENTER" layoutX="356.0" layoutY="575.0" prefHeight="20.0" prefWidth="635.0" text="Conta de destino não encontrada." textFill="RED" visible="false">
-         <font>
-            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
 
