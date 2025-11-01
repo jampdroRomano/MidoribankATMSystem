@@ -155,5 +155,10 @@
             </InnerShadow>
          </effect>
       </Text>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="124.0" prefHeight="35.0" prefWidth="636.0" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

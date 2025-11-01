@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.ConfirmarDadosController">
+   <children>
+      <Pane layoutX="227.0" layoutY="99.0" prefHeight="507.0" prefWidth="598.0" style="-fx-background-color: #27232A; -fx-background-radius: 8;">
+         <children>
+            <Line endX="522.0" layoutX="76.0" layoutY="76.0" startX="-76.0" stroke="#737373" />
+            <Text fill="WHITE" layoutX="75.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Midori">
+               <font>
+                  <Font size="32.0" />
+               </font>
+               <effect>
+                  <InnerShadow offsetY="4.0">
+                     <color>
+                        <Color opacity="0.25" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+            </Text>
+            <Text fill="#14ff00" layoutX="176.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Bank">
+               <font>
+                  <Font size="32.0" />
+               </font>
+               <effect>
+                  <InnerShadow offsetY="4.0">
+                     <color>
+                        <Color opacity="0.25" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+            </Text>
+            <ImageView fitHeight="40.0" fitWidth="35.0" layoutX="25.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../confirmar-operacao/logotipo_grande.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="234.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transferência para">
+               <font>
+                  <Font name="Montserrat Regular" size="14.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="223.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agência:">
+               <font>
+                  <Font name="Montserrat Regular" size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="173.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número da conta:">
+               <font>
+                  <Font name="Montserrat Regular" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="labelNome" alignment="CENTER" layoutX="-3.0" layoutY="140.0" prefHeight="27.0" prefWidth="604.0" style="-fx-font-weight: bold;" text="Steph Curry" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelAgencia" layoutX="320.0" layoutY="333.0" prefHeight="27.0" prefWidth="109.0" text="0123-2" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelConta" layoutX="360.0" layoutY="269.0" prefHeight="27.0" prefWidth="121.0" text="12186520" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="207.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPF:">
+               <font>
+                  <Font name="Montserrat Regular" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="labelNumeroIdentificacao" layoutX="259.0" layoutY="210.0" prefHeight="27.0" prefWidth="181.0" text="123.312.323-00  " textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="165.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de conta:">
+               <font>
+                  <Font name="Montserrat Regular" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="LabelTipoConta" layoutX="305.0" layoutY="393.0" prefHeight="27.0" prefWidth="222.0" text=" Conta corrente " textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow height="76.68" radius="37.84" width="76.68">
+               <color>
+                  <Color opacity="0.5" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Pane>
+      <Pane fx:id="paneConfirmar" layoutX="531.0" layoutY="628.0" prefHeight="70.0" prefWidth="294.0" style="-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 4);">
+         <children>
+            <Text fill="WHITE" layoutX="87.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Continuar">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="paneVoltar" layoutX="225.0" layoutY="628.0" prefHeight="70.0" prefWidth="294.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-border-width: 2;">
+         <children>
+            <Text fill="WHITE" layoutX="121.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Voltar">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="86.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../depositar/simbolo_voltar.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Text fill="WHITE" layoutX="304.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informações conta destino">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>
