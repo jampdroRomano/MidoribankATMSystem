@@ -6,14 +6,18 @@ import com.midoribank.atm.models.UserProfile;
 import com.midoribank.atm.services.SessionManager;
 import com.midoribank.atm.utils.AnimationUtils;
 import com.midoribank.atm.utils.CriptografiaUtils;
+import com.midoribank.atm.utils.LoadingUtils;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.Pane;
+import javafx.geometry.Pos;
 
-public class DigitarSenhaController {
+public class TelaPinController {
 
     @FXML private PasswordField senhaField;
     @FXML private Pane button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
@@ -21,25 +25,33 @@ public class DigitarSenhaController {
     @FXML private Node paneVoltar;
     @FXML private Pane buttonApagar;
     @FXML private Pane buttonC;
+    @FXML private Label labelTitulo;
 
     private UserProfile currentUser;
     private final int MAX_SENHA_LENGTH = 4;
-
     private ContaDAO contaDAO;
+
+    private SessionManager.PinEntryContext context;
+    private String senhaCadastroTemporaria = null;
 
     @FXML
     public void initialize() {
         this.currentUser = SessionManager.getCurrentUser();
-
+        this.context = SessionManager.getPinEntryContext();
         this.contaDAO = new ContaDAO();
 
-        if (currentUser == null) {
-            try { App.setRoot("Login"); } catch (IOException e) { e.printStackTrace(); }
-            return;
-        }
+        configurarVisuais();
         configurarBotoesNumericos();
         configurarControles();
         configurarBotoesEdicao();
+    }
+
+    private void configurarVisuais() {
+        if (context == SessionManager.PinEntryContext.CADASTRO_PIN) {
+            labelTitulo.setText("Digite uma senha para o seu cartão");
+        } else {
+            labelTitulo.setText("Digite a senha do seu cartão");
+        }
     }
 
     private void configurarBotoesNumericos() {
@@ -50,8 +62,6 @@ public class DigitarSenhaController {
                 final String numero = String.valueOf(i);
                 pane.setOnMouseClicked(e -> adicionarDigito(numero));
                 AnimationUtils.setupNodeHoverEffects(pane);
-            } else {
-                System.err.println("Aviso: Um painel numérico (button" + i + ") não foi encontrado no FXML.");
             }
         }
     }
@@ -60,15 +70,10 @@ public class DigitarSenhaController {
         if (paneConfirmar != null) {
             paneConfirmar.setOnMouseClicked(e -> handleConfirmarSenha());
             AnimationUtils.setupNodeHoverEffects(paneConfirmar);
-        } else {
-            System.err.println("Aviso: paneConfirmar não encontrado no FXML.");
         }
-
         if (paneVoltar != null) {
             paneVoltar.setOnMouseClicked(e -> handleVoltar());
             AnimationUtils.setupNodeHoverEffects(paneVoltar);
-        } else {
-            System.err.println("Aviso: paneVoltar não encontrado no FXML.");
         }
     }
 
@@ -76,15 +81,151 @@ public class DigitarSenhaController {
         if (buttonApagar != null) {
             buttonApagar.setOnMouseClicked(e -> apagarDigito());
             AnimationUtils.setupNodeHoverEffects(buttonApagar);
-        } else {
-            System.err.println("Aviso: buttonApagar não encontrado no FXML.");
         }
-
         if (buttonC != null) {
             buttonC.setOnMouseClicked(e -> limparSenha());
             AnimationUtils.setupNodeHoverEffects(buttonC);
+        }
+    }
+
+    @FXML
+    private void handleVoltar() {
+        try {
+            if (context == SessionManager.PinEntryContext.CADASTRO_PIN) {
+                App.setRoot("CadastroCartao");
+            } else {
+                App.setRoot("confirmar-operacao");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            exibirMensagemErro("Não foi possível voltar para a tela anterior.");
+        }
+    }
+
+    @FXML
+    private void handleConfirmarSenha() {
+        switch (context) {
+            case CADASTRO_PIN:
+                handleConfirmarCadastroPin();
+                break;
+            case OPERACAO_FINANCEIRA:
+                handleConfirmarOperacaoPin();
+                break;
+        }
+    }
+
+    private void handleConfirmarCadastroPin() {
+        String senhaDigitada = senhaField.getText();
+
+        if (senhaCadastroTemporaria == null) {
+            if (senhaDigitada.length() != MAX_SENHA_LENGTH) {
+                exibirMensagemErro("A senha deve ter " + MAX_SENHA_LENGTH + " dígitos.");
+                return;
+            }
+            this.senhaCadastroTemporaria = senhaDigitada;
+            labelTitulo.setText("Digite novamente a senha");
+            limparSenha();
+
         } else {
-            System.err.println("Aviso: buttonC não encontrado no FXML.");
+            if (senhaDigitada.equals(this.senhaCadastroTemporaria)) {
+                SessionManager.setCadastroSenhaCartao(senhaDigitada);
+
+                LoadingUtils.runWithLoading("Finalizando cadastro...", () -> {
+                    boolean sucesso = SessionManager.salvarCadastroCompletoNoBanco();
+
+                    Platform.runLater(() -> {
+                        if(sucesso) {
+                            exibirMensagemInfo("Sucesso", "Cadastro realizado! Faça o login.");
+                            try {
+                                App.setRoot("Login");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            exibirMensagemErro("Falha crítica no cadastro. Tente novamente mais tarde.");
+                        }
+                    });
+                });
+
+            } else {
+                exibirMensagemErro("As senhas não conferem! Tente novamente.");
+                this.senhaCadastroTemporaria = null;
+                labelTitulo.setText("Digite uma senha para o seu cartão");
+                limparSenha();
+            }
+        }
+    }
+
+    private void handleConfirmarOperacaoPin() {
+        if (currentUser == null) {
+            exibirMensagemErro("Erro de sessão. Faça login novamente.");
+            try { App.setRoot("Login"); } catch (IOException e) { e.printStackTrace(); }
+            return;
+        }
+
+        String senhaDigitada = senhaField.getText();
+
+        if (senhaDigitada.length() != MAX_SENHA_LENGTH) {
+            exibirMensagemErro("A senha do cartão deve ter " + MAX_SENHA_LENGTH + " dígitos.");
+            return;
+        }
+
+        String senhaHashBanco = currentUser.getSenhaCartaoHash();
+        boolean senhaCorreta = CriptografiaUtils.checkPassword(senhaDigitada, senhaHashBanco);
+
+        if (senhaCorreta) {
+            executarOperacaoFinanceira();
+        } else {
+            exibirMensagemErro("Senha do cartão incorreta!");
+            limparSenha();
+        }
+    }
+
+    private void executarOperacaoFinanceira() {
+        String tipo = SessionManager.getCurrentTransactionType();
+        double valor = SessionManager.getCurrentTransactionAmount();
+        double saldoAtual = currentUser.getSaldo();
+        String numeroConta = currentUser.getNumeroConta();
+        double novoSaldo;
+        boolean sucessoNoBanco = false;
+
+        if ("Saque".equals(tipo)) {
+            if (valor <= 0 || valor > saldoAtual) {
+                exibirMensagemErro("Saldo insuficiente. Operação cancelada.");
+                SessionManager.clearTransaction();
+                try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
+                return;
+            }
+            novoSaldo = saldoAtual - valor;
+
+        } else if ("Deposito".equals(tipo)) {
+            if (valor <= 0) {
+                exibirMensagemErro("Valor de depósito deve ser positivo.");
+                SessionManager.clearTransaction();
+                try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
+                return;
+            }
+            novoSaldo = saldoAtual + valor;
+
+        } else {
+            exibirMensagemErro("Tipo de operação desconhecido: " + tipo);
+            return;
+        }
+
+        sucessoNoBanco = this.contaDAO.atualizarSaldo(numeroConta, novoSaldo);
+
+        if (sucessoNoBanco) {
+            currentUser.setSaldo(novoSaldo);
+            try {
+                App.setRoot("ConclusaoOperacao");
+            } catch (IOException e) {
+                e.printStackTrace();
+                exibirMensagemErro("Não foi possível carregar a tela de conclusão.");
+            }
+        } else {
+            exibirMensagemErro("Falha de comunicação com o banco. A operação foi cancelada. Tente mais tarde.");
+            SessionManager.clearTransaction();
+            try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
         }
     }
 
@@ -105,15 +246,6 @@ public class DigitarSenhaController {
         senhaField.clear();
     }
 
-    private void handleVoltar() {
-        try {
-            App.setRoot("confirmar-operacao");
-        } catch (IOException e) {
-            e.printStackTrace();
-            exibirMensagemErro("Não foi possível voltar para a tela anterior.");
-        }
-    }
-
     private void exibirMensagemErro(String mensagem) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erro");
@@ -122,76 +254,11 @@ public class DigitarSenhaController {
         alert.showAndWait();
     }
 
-    private void handleConfirmarSenha() {
-        String senhaDigitada = senhaField.getText();
-
-        if (senhaDigitada.length() != MAX_SENHA_LENGTH) {
-            exibirMensagemErro("A senha do cartão deve ter " + MAX_SENHA_LENGTH + " dígitos.");
-            return;
-        }
-
-        String senhaHashBanco = currentUser.getSenhaCartaoHash();
-        boolean senhaCorreta = CriptografiaUtils.checkPassword(senhaDigitada, senhaHashBanco);
-
-        if (senhaCorreta) {
-            executarOperacao();
-        } else {
-            exibirMensagemErro("Senha do cartão incorreta!");
-            limparSenha();
-        }
-    }
-
-    private void executarOperacao() {
-
-        String tipo = SessionManager.getCurrentTransactionType();
-        double valor = SessionManager.getCurrentTransactionAmount();
-
-        double saldoAtual = currentUser.getSaldo();
-        String numeroConta = currentUser.getNumeroConta();
-
-        double novoSaldo;
-        boolean sucessoNoBanco = false;
-
-        if ("Saque".equals(tipo)) {
-            if (valor <= 0 || valor > saldoAtual) {
-                exibirMensagemErro("Saldo insuficiente. Operação cancelada.");
-                SessionManager.clearTransaction();
-                try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
-                return;
-            }
-            novoSaldo = saldoAtual - valor;
-
-        } else if ("Deposito".equals(tipo)) {
-
-            if (valor <= 0) {
-                exibirMensagemErro("Valor de depósito deve ser positivo.");
-                SessionManager.clearTransaction();
-                try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
-                return;
-            }
-            novoSaldo = saldoAtual + valor;
-
-        } else {
-            exibirMensagemErro("Tipo de operação desconhecido: " + tipo);
-            return;
-        }
-
-        sucessoNoBanco = this.contaDAO.atualizarSaldo(numeroConta, novoSaldo);
-
-        if (sucessoNoBanco) {
-
-            currentUser.setSaldo(novoSaldo);
-
-            try {
-                App.setRoot("ConclusaoOperacao");
-            } catch (IOException e) {
-                e.printStackTrace();
-                exibirMensagemErro("Não foi possível carregar a tela de conclusão.");
-            }
-        } else {
-            exibirMensagemErro("Falha de comunicação com o banco. A operação foi cancelada. Tente mais tarde.");
-            SessionManager.clearTransaction();
-            try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
-        }
+    private void exibirMensagemInfo(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }

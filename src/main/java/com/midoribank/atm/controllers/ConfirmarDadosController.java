@@ -64,8 +64,9 @@ public class ConfirmarDadosController {
     }
 
     private void handleContinuarParaSenha() {
+        SessionManager.setPinEntryContext(SessionManager.PinEntryContext.OPERACAO_FINANCEIRA);
         try {
-            App.setRoot("DigitarSenha");
+            App.setRoot("TelaPin");
         } catch (IOException e) {
             e.printStackTrace();
             exibirMensagemErro("Não foi possível carregar a tela de senha.");

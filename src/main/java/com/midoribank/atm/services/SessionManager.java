@@ -5,6 +5,11 @@ import java.util.Random;
 
 public class SessionManager {
 
+    public enum PinEntryContext {
+        OPERACAO_FINANCEIRA,
+        CADASTRO_PIN
+    }
+
     private static UserProfile currentUser;
     private static double currentTransactionAmount;
     private static String currentTransactionType;
@@ -22,6 +27,19 @@ public class SessionManager {
 
     private static String emailRecuperacao;
     private static String codigoRecuperacaoVerificado;
+
+    private static PinEntryContext pinContext;
+
+    public static void setPinEntryContext(PinEntryContext context) {
+        pinContext = context;
+    }
+
+    public static PinEntryContext getPinEntryContext() {
+        if (pinContext == null) {
+            throw new IllegalStateException("Contexto do PIN não foi definido antes de carregar a tela.");
+        }
+        return pinContext;
+    }
 
     public static void setCurrentUser(UserProfile user) {
         currentUser = user;

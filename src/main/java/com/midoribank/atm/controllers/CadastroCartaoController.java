@@ -54,9 +54,10 @@ public class CadastroCartaoController {
 
     private void handleCadastroCartaoClick() {
         SessionManager.setCadastroCartao(numeroCartao.getText(), cvvCartao.getText());
+        SessionManager.setPinEntryContext(SessionManager.PinEntryContext.CADASTRO_PIN);
 
         try {
-            App.setRoot("CadastroSenha");
+            App.setRoot("TelaPin");
         } catch (IOException e) {
             e.printStackTrace();
             exibirMensagemErro("Não foi possível carregar a tela de senha.");
