@@ -47,7 +47,7 @@
                </image>
             </ImageView>
             <Line endX="599.0" layoutX="-8.0" layoutY="133.0" startX="118.0" stroke="#737373" />
-            <Text fill="WHITE" layoutX="262.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Casdastrar">
+            <Text fill="WHITE" layoutX="271.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Cadastrar">
                <font>
                   <Font size="36.0" />
                </font>
