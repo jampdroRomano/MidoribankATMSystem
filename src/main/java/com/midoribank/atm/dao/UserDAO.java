@@ -107,4 +107,26 @@ public class UserDAO {
             return false;
         }
     }
+
+    public UserProfile getProfileBasico(String email) {
+        String sql = "SELECT id, nome, email FROM usuario WHERE email = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nome = rs.getString("nome");
+                    String emailDb = rs.getString("email");
+
+                    return new UserProfile(id, nome, emailDb, null, null, null, 0, null, null);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar perfil básico do usuário: " + e.getMessage());
+        }
+        return null;
+    }
 }

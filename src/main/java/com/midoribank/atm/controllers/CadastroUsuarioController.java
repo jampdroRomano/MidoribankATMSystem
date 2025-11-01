@@ -33,6 +33,8 @@ public class CadastroUsuarioController {
         if (cadastrarButton != null) {
             cadastrarButton.setOnAction(e -> handleCadastroClick());
             AnimationUtils.setupButtonHoverEffects(cadastrarButton);
+
+            cadastrarButton.setFocusTraversable(false);
         } else {
             System.err.println("Aviso: cadastrarButton não encontrado no FXML.");
         }
@@ -43,6 +45,8 @@ public class CadastroUsuarioController {
         } else {
             System.err.println("Aviso: btnVoltarCadastrar não encontrado no FXML.");
         }
+
+        Platform.runLater(() -> nomeField.requestFocus());
     }
 
     private void handleCadastroClick() {
