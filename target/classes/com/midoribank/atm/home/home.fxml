@@ -114,7 +114,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Label fx:id="labelNomeUsuario" layoutX="55.0" layoutY="305.0" prefHeight="46.0" prefWidth="278.0" text="Steph Curry" textFill="WHITE">
+      <Label fx:id="labelNomeUsuario" layoutX="55.0" layoutY="305.0" prefHeight="46.0" prefWidth="200.0" text="Steph Curry" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
