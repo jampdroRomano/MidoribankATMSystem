@@ -31,8 +31,8 @@ public class UserDAO {
 
     public UserProfile getProfile(String email) {
         String sql = "SELECT " +
-                "  u.id, u.nome, u.email, " +
-                "  c.agencia, c.numero_conta, c.saldo, " +
+                "  u.id AS usuario_id, u.nome, u.email, " +
+                "  c.id AS conta_id, c.agencia, c.numero_conta, c.saldo, " +
                 "  ca.numero_cartao, ca.senha AS pin_cartao, " +
                 "  (SELECT senha FROM usuario WHERE email = ?) AS senha_conta " +
                 "FROM " +
@@ -50,7 +50,8 @@ public class UserDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    int id = rs.getInt("id");
+                    int usuarioId = rs.getInt("usuario_id");
+                    int contaId = rs.getInt("conta_id");
                     String nome = rs.getString("nome");
                     String senhaConta = rs.getString("senha_conta");
                     String agencia = rs.getString("agencia");
@@ -58,11 +59,33 @@ public class UserDAO {
                     double saldo = rs.getDouble("saldo");
                     String cartao = rs.getString("numero_cartao");
                     String pin = rs.getString("pin_cartao");
-                    return new UserProfile(id, nome, email, numeroConta, agencia, senhaConta, saldo, cartao, pin);
+                    return new UserProfile(usuarioId, contaId, nome, email, numeroConta, agencia, senhaConta, saldo, cartao, pin);
                 }
             }
         } catch (SQLException e) {
             System.err.println("Erro ao buscar perfil do usuário: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public UserProfile getProfileBasico(String email) {
+        String sql = "SELECT id, nome, email FROM usuario WHERE email = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nome = rs.getString("nome");
+                    String emailDb = rs.getString("email");
+
+                    return new UserProfile(id, 0, nome, emailDb, null, null, null, 0, null, null);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar perfil básico do usuário: " + e.getMessage());
         }
         return null;
     }
@@ -106,27 +129,5 @@ public class UserDAO {
             System.err.println("Erro ao verificar e-mail: " + e.getMessage());
             return false;
         }
-    }
-
-    public UserProfile getProfileBasico(String email) {
-        String sql = "SELECT id, nome, email FROM usuario WHERE email = ?";
-
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, email);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nome = rs.getString("nome");
-                    String emailDb = rs.getString("email");
-
-                    return new UserProfile(id, nome, emailDb, null, null, null, 0, null, null);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao buscar perfil básico do usuário: " + e.getMessage());
-        }
-        return null;
     }
 }

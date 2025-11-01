@@ -33,11 +33,10 @@ public class ContaDAO {
         return -1;
     }
 
-    public boolean atualizarSaldo(String numeroConta, double novoSaldo) {
+    public boolean atualizarSaldo(String numeroConta, double novoSaldo, Connection conn) {
         String sql = "UPDATE conta SET saldo = ? WHERE numero_conta = ?";
 
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDouble(1, novoSaldo);
             stmt.setString(2, numeroConta);
@@ -47,7 +46,6 @@ public class ContaDAO {
 
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar saldo no banco: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
