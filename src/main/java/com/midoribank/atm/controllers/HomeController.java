@@ -61,7 +61,7 @@ public class HomeController {
         paneDepositar.setOnMouseClicked(e -> abrirTelaDeposito());
         paneEncerrar.setOnMouseClicked(e -> handleEncerrar());
 
-        paneTransferir.setOnMouseClicked(e -> showInDevelopmentAlert());
+        paneTransferir.setOnMouseClicked(e -> abrirTelaTransferencia());
         paneExtrato.setOnMouseClicked(e -> showInDevelopmentAlert());
         paneCartao.setOnMouseClicked(e -> showInDevelopmentAlert());
         paneDetalhes.setOnMouseClicked(e -> showInDevelopmentAlert());
@@ -77,7 +77,8 @@ public class HomeController {
 
     private void abrirTelaSaque() {
         try {
-            App.setRoot("sacar");
+            SessionManager.setOperacaoContext("Saque");
+            App.setRoot("OperacaoValor");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +86,17 @@ public class HomeController {
 
     private void abrirTelaDeposito() {
         try {
-            App.setRoot("depositar");
+            SessionManager.setOperacaoContext("Deposito");
+            App.setRoot("OperacaoValor");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirTelaTransferencia() {
+        try {
+            SessionManager.setOperacaoContext("Transferencia");
+            App.setRoot("Transferencia");
         } catch (IOException e) {
             e.printStackTrace();
         }

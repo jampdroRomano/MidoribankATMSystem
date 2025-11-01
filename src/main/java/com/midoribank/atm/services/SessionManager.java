@@ -30,6 +30,32 @@ public class SessionManager {
 
     private static PinEntryContext pinContext;
 
+    private static String currentOperacaoContext;
+
+    private static UserProfile contaDestino;
+
+
+    public static void setOperacaoContext(String context) {
+        currentOperacaoContext = context;
+    }
+
+    public static String getOperacaoContext() {
+        return currentOperacaoContext;
+    }
+
+    public static void setContaDestino(UserProfile user) {
+        contaDestino = user;
+    }
+
+    public static UserProfile getContaDestino() {
+        return contaDestino;
+    }
+
+    public static void clearTransferenciaData() {
+        contaDestino = null;
+
+    }
+
     public static void setPinEntryContext(PinEntryContext context) {
         pinContext = context;
     }
