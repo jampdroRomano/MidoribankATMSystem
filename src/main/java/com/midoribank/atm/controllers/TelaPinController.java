@@ -1,8 +1,8 @@
 package com.midoribank.atm.controllers;
 
 import com.midoribank.atm.App;
-import com.midoribank.atm.dao.ContaDAO;
 import com.midoribank.atm.models.UserProfile;
+import com.midoribank.atm.services.OperacaoService;
 import com.midoribank.atm.services.SessionManager;
 import com.midoribank.atm.utils.AnimationUtils;
 import com.midoribank.atm.utils.CriptografiaUtils;
@@ -29,7 +29,8 @@ public class TelaPinController {
 
     private UserProfile currentUser;
     private final int MAX_SENHA_LENGTH = 4;
-    private ContaDAO contaDAO;
+
+    private OperacaoService operacaoService;
 
     private SessionManager.PinEntryContext context;
     private String senhaCadastroTemporaria = null;
@@ -38,7 +39,7 @@ public class TelaPinController {
     public void initialize() {
         this.currentUser = SessionManager.getCurrentUser();
         this.context = SessionManager.getPinEntryContext();
-        this.contaDAO = new ContaDAO();
+        this.operacaoService = new OperacaoService();
 
         configurarVisuais();
         configurarBotoesNumericos();
@@ -47,10 +48,12 @@ public class TelaPinController {
     }
 
     private void configurarVisuais() {
-        if (context == SessionManager.PinEntryContext.CADASTRO_PIN) {
-            labelTitulo.setText("Digite uma senha para o seu cartão");
-        } else {
-            labelTitulo.setText("Digite a senha do seu cartão");
+        if (labelTitulo != null) {
+            if (context == SessionManager.PinEntryContext.CADASTRO_PIN) {
+                labelTitulo.setText("Digite uma senha para o seu cartão");
+            } else {
+                labelTitulo.setText("Digite a senha do seu cartão");
+            }
         }
     }
 
@@ -185,8 +188,6 @@ public class TelaPinController {
         String tipo = SessionManager.getCurrentTransactionType();
         double valor = SessionManager.getCurrentTransactionAmount();
         double saldoAtual = currentUser.getSaldo();
-        String numeroConta = currentUser.getNumeroConta();
-        double novoSaldo;
         boolean sucessoNoBanco = false;
 
         if ("Saque".equals(tipo)) {
@@ -196,7 +197,8 @@ public class TelaPinController {
                 try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
                 return;
             }
-            novoSaldo = saldoAtual - valor;
+
+            sucessoNoBanco = this.operacaoService.executarSaque(currentUser, valor);
 
         } else if ("Deposito".equals(tipo)) {
             if (valor <= 0) {
@@ -205,17 +207,23 @@ public class TelaPinController {
                 try { App.setRoot("home"); } catch (IOException e) { e.printStackTrace(); }
                 return;
             }
-            novoSaldo = saldoAtual + valor;
+
+            sucessoNoBanco = this.operacaoService.executarDeposito(currentUser, valor);
 
         } else {
             exibirMensagemErro("Tipo de operação desconhecido: " + tipo);
             return;
         }
 
-        sucessoNoBanco = this.contaDAO.atualizarSaldo(numeroConta, novoSaldo);
-
         if (sucessoNoBanco) {
+            double novoSaldo;
+            if ("Saque".equals(tipo)) {
+                novoSaldo = saldoAtual - valor;
+            } else {
+                novoSaldo = saldoAtual + valor;
+            }
             currentUser.setSaldo(novoSaldo);
+
             try {
                 App.setRoot("ConclusaoOperacao");
             } catch (IOException e) {
