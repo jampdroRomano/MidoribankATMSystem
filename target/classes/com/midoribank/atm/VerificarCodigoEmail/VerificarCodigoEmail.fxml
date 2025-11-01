@@ -69,7 +69,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="entrarButton" layoutX="111.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleVerificarCodigo" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Verificar" textFill="WHITE">
+            <Button fx:id="entrarButton" layoutX="111.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleVerificarCodigo" prefHeight="65.0" prefWidth="482.0" style="-fx-border-radius: 25; -fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3;" text="Verificar" textFill="WHITE">
                <font>
                   <Font size="28.0" />
                </font>
@@ -79,7 +79,7 @@
                   <Image url="@../Login/btnVoltar.png" />
                </image>
             </ImageView>
-            <Label layoutX="117.0" layoutY="426.0" text="Mandar outro codigo" textFill="#ababab">
+            <Label fx:id="reenviarLabel" layoutX="117.0" layoutY="426.0" text="Mandar outro codigo" textFill="#ababab">
                <font>
                   <Font size="14.0" />
                </font>
@@ -94,12 +94,12 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Label layoutX="546.0" layoutY="272.0" text="15:00" textFill="WHITE">
+            <Label fx:id="timerLabel" layoutX="546.0" layoutY="272.0" text="15:00" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" layoutX="295.0" layoutY="426.0" prefHeight="17.0" prefWidth="294.0" style="-fx-font-weight: bold;" textFill="#dd0000">
+            <Label fx:id="errorLabel" layoutX="112.0" layoutY="453.0" prefHeight="20.0" prefWidth="482.0" style="-fx-font-weight: bold;" textFill="#dd0000">
                <font>
                   <Font size="14.0" />
                </font>

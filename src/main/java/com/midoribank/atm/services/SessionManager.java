@@ -20,6 +20,9 @@ public class SessionManager {
     private static String cadastroCVV;
     private static String cadastroSenhaCartao;
 
+    private static String emailRecuperacao;
+    private static String codigoRecuperacaoVerificado;
+
     public static void setCurrentUser(UserProfile user) {
         currentUser = user;
     }
@@ -98,5 +101,26 @@ public class SessionManager {
         }
 
         return sucesso;
+    }
+
+    public static void setEmailRecuperacao(String email) {
+        emailRecuperacao = email;
+    }
+
+    public static String getEmailRecuperacao() {
+        return emailRecuperacao;
+    }
+
+    public static void setCodigoVerificado(String codigo) {
+        codigoRecuperacaoVerificado = codigo;
+    }
+
+    public static String getCodigoVerificado() {
+        return codigoRecuperacaoVerificado;
+    }
+
+    public static void clearRecuperacao() {
+        emailRecuperacao = null;
+        codigoRecuperacaoVerificado = null;
     }
 }

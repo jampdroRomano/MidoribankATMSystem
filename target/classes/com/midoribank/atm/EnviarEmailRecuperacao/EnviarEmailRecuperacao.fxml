@@ -81,7 +81,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Label fx:id="errorLabel" layoutX="297.0" layoutY="436.0" prefHeight="20.0" prefWidth="465.0" style="-fx-font-weight: bold;" textFill="#dd0000">
+      <Label fx:id="errorLabel" layoutX="297.0" layoutY="436.0" prefHeight="58.0" prefWidth="465.0" style="-fx-font-weight: bold;" textFill="#dd0000">
          <font>
             <Font size="14.0" />
          </font>
