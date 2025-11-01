@@ -30,7 +30,6 @@ public class CadastroSenhaController {
     public void initialize() {
         if (labelTitulo != null) {
             labelTitulo.setText("Digite uma senha para o seu cartão");
-            labelTitulo.setLayoutX(320.0);
         }
 
         configurarBotoesNumericos();
@@ -93,7 +92,6 @@ public class CadastroSenhaController {
             }
             this.senhaCadastroTemporaria = senhaDigitada;
             labelTitulo.setText("Digite novamente a senha");
-            labelTitulo.setLayoutX(340.0);
             limparSenha();
 
         } else {
@@ -121,7 +119,6 @@ public class CadastroSenhaController {
                 exibirMensagemErro("As senhas não conferem! Tente novamente.");
                 this.senhaCadastroTemporaria = null;
                 labelTitulo.setText("Digite uma senha para o seu cartão");
-                labelTitulo.setLayoutX(320.0);
                 limparSenha();
             }
         }
