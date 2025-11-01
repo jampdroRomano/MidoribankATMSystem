@@ -49,4 +49,24 @@ public class ContaDAO {
             return false;
         }
     }
+
+    public int findContaIdByAgenciaAndNumero(String agencia, String numeroConta) {
+        String sql = "SELECT id FROM conta WHERE agencia = ? AND numero_conta = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, agencia);
+            stmt.setString(2, numeroConta);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar conta por agência e número: " + e.getMessage());
+        }
+        return -1;
+    }
 }
