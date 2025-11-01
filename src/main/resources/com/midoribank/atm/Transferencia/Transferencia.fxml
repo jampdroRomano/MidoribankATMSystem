@@ -13,24 +13,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530); -fx-background: ;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.HomeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.TransferenciaController">
    <children>
       <Label layoutX="448.0" layoutY="156.0" text="Preencha os dados da conta" textFill="WHITE">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Pane layoutX="354.0" layoutY="259.0" prefHeight="69.0" prefWidth="635.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="355.0" layoutY="238.0" prefHeight="69.0" prefWidth="635.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="635.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldAgencia" prefHeight="69.0" prefWidth="635.0" promptText="Insira o numero da agência" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
          </children></Pane>
-      <Pane layoutX="354.0" layoutY="356.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="356.0" layoutY="356.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldConta" prefHeight="69.0" prefWidth="381.0" promptText="Insira o numero da conta" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
@@ -38,44 +38,57 @@
          </children></Pane>
       <Pane layoutX="748.0" layoutY="356.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="241.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldDigito" prefHeight="69.0" prefWidth="241.0" promptText="- 0 " style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
-                  <Font size="24.0" />
+                  <Font size="18.0" />
                </font>
             </TextField>
          </children></Pane>
-      <Pane layoutX="354.0" layoutY="452.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+      <Pane layoutX="356.0" layoutY="475.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
+            <TextField fx:id="fieldCpfCnpj" prefHeight="69.0" prefWidth="381.0" promptText="Insira CPF ou CNPJ" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
          </children>
       </Pane>
-      <Text fill="WHITE" layoutX="359.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="agência">
+      <Pane layoutX="748.0" layoutY="476.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+         <children>
+            <ComboBox fx:id="comboTipoConta" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: transparent; -fx-background-radius: 8;">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Conta Corrente" />
+                     <String fx:value="Conta Poupança" />
+                     <String fx:value="Conta Salário" />
+                  </FXCollections>
+               </items>
+            </ComboBox>
+         </children>
+      </Pane>
+      <Text fill="WHITE" layoutX="362.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="agência">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="361.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="conta">
+      <Text fill="WHITE" layoutX="363.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="conta">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Text>
       <Text fill="WHITE" layoutX="751.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="dígito">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="752.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="tipo de conta">
+      <Text fill="WHITE" layoutX="751.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="tipo de conta">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="360.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="CPF ou CNPJ">
+      <Text fill="WHITE" layoutX="361.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="CPF ou CNPJ">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Text>
       <Text fill="#737373" layoutX="65.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número da conta">
@@ -95,7 +108,7 @@
       </Text>
       <Label fx:id="labelSaldoAtual" layoutX="65.0" layoutY="315.0" prefHeight="46.0" prefWidth="278.0" text="R$ 380,00" textFill="WHITE">
          <font>
-            <Font name="System\ Bold" size="33.0" />
+            <Font name="System Bold" size="33.0" />
          </font>
       </Label>
       <Text fill="WHITE" layoutX="68.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transferencia">
@@ -121,14 +134,14 @@
             </Text>
             <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="86.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../depositar/simbolo_voltar.png" />
+                  <Image url="@simbolo_voltar.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
       <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="49.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../depositar/logotipo.png" />
+            <Image url="@logotipo.png" />
          </image>
       </ImageView>
       <Text fill="WHITE" layoutX="106.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Midori">
@@ -155,18 +168,37 @@
             </InnerShadow>
          </effect>
       </Text>
-      <Pane layoutX="749.0" layoutY="453.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
-         <children>
-            <ComboBox fx:id="comboTipoConta" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: transparent; -fx-background-radius: 8;">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Conta Corrente" />
-                     <String fx:value="Conta Poupança" />
-                     <String fx:value="Conta Salário" />
-                  </FXCollections>
-               </items>
-            </ComboBox>
-         </children>
-      </Pane>
+      <Label fx:id="errorLabelAgencia" layoutX="360.0" layoutY="313.0" prefHeight="20.0" prefWidth="624.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabelConta" layoutX="360.0" layoutY="432.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabelDigito" layoutX="748.0" layoutY="432.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabelTipoConta" layoutX="751.0" layoutY="555.0" prefHeight="20.0" prefWidth="241.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabelCpfCnpj" layoutX="359.0" layoutY="555.0" prefHeight="20.0" prefWidth="372.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="labelErroGeral" alignment="CENTER" layoutX="356.0" layoutY="575.0" prefHeight="20.0" prefWidth="635.0" text="Conta de destino não encontrada." textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
    </children>
 </Pane>

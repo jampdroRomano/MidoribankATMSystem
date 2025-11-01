@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.SacarController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: radial-gradient(center 55% 50%, radius 65%, #5a5062, #292530);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.midoribank.atm.controllers.OperacaoValorController">
    <children>
       <Pane fx:id="paneContinuar" layoutX="673.0" layoutY="592.0" prefHeight="70.0" prefWidth="308.0" style="-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #14FF00, #0C9A00); -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 4);">
          <children>
@@ -31,7 +31,7 @@
             </Text>
             <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="88.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../depositar/simbolo_voltar.png" />
+                  <Image url="@simbolo_voltar.png" />
                </image>
             </ImageView>
          </children>
@@ -61,11 +61,13 @@
             <Image url="@logotipo.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="58.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sacar">
+
+      <Label fx:id="labelTituloOperacao" layoutX="58.0" layoutY="204.0" text="Operação" textFill="WHITE">
          <font>
             <Font size="36.0" />
          </font>
-      </Text>
+      </Label>
+
       <TextField fx:id="valorField" cache="true" layoutX="345.0" layoutY="181.0" prefHeight="84.0" prefWidth="636.0" promptText="Total" style="-fx-background-radius: 15; -fx-background-color: white;">
          <font>
             <Font name="Montserrat Regular" size="36.0" />
@@ -117,7 +119,7 @@
          <children>
             <ImageView fitHeight="35.0" fitWidth="48.0" layoutX="18.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../depositar/simbolo_apagar.png" />
+                  <Image url="@simbolo_apagar.png" />
                </image>
             </ImageView>
          </children>
@@ -126,7 +128,7 @@
          <children>
             <ImageView fitHeight="37.0" fitWidth="35.0" layoutX="26.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../depositar/simbolo_limpar.png" />
+                  <Image url="@simbolo_limpar.png" />
                </image>
             </ImageView>
          </children>
