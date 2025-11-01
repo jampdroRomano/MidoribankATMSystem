@@ -73,13 +73,13 @@ public class ConfirmarDadosController {
         }
     }
 
+
     private void handleVoltar() {
         try {
             String telaAnterior = "home";
-            if ("Saque".equals(tipoOperacao)) {
-                telaAnterior = "sacar";
-            } else if ("Deposito".equals(tipoOperacao)) {
-                telaAnterior = "depositar";
+            // Verifica o tipo de operação e aponta para a tela correta (OperacaoValor)
+            if ("Saque".equals(tipoOperacao) || "Depósito".equals(tipoOperacao)) {
+                telaAnterior = "OperacaoValor";
             }
 
             App.setRoot(telaAnterior);

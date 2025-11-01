@@ -86,7 +86,7 @@ public class HomeController {
 
     private void abrirTelaDeposito() {
         try {
-            SessionManager.setOperacaoContext("Deposito");
+            SessionManager.setOperacaoContext("Depósito");
             App.setRoot("OperacaoValor");
         } catch (IOException e) {
             e.printStackTrace();

@@ -147,9 +147,9 @@
                   <Font name="Montserrat Regular" size="24.0" />
                </font>
             </Text>
-            <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="104.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="104.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../depositar/simbolo_voltar.png" />
+                  <Image url="@simbolo_voltar.png" />
                </image>
             </ImageView>
          </children>

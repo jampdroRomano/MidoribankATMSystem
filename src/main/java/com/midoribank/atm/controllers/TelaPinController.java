@@ -200,7 +200,7 @@ public class TelaPinController {
 
             sucessoNoBanco = this.operacaoService.executarSaque(currentUser, valor);
 
-        } else if ("Deposito".equals(tipo)) {
+        } else if ("Depósito".equals(tipo)) {
             if (valor <= 0) {
                 exibirMensagemErro("Valor de depósito deve ser positivo.");
                 SessionManager.clearTransaction();
