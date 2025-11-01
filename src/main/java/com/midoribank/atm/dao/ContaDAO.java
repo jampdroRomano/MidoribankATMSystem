@@ -1,5 +1,7 @@
 package com.midoribank.atm.dao;
 
+import com.midoribank.atm.models.UserProfile;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,5 +70,46 @@ public class ContaDAO {
             System.err.println("Erro ao buscar conta por agência e número: " + e.getMessage());
         }
         return -1;
+    }
+
+    public UserProfile getProfileByConta(String agencia, String numeroConta) {
+        String sql = "SELECT " +
+                "  u.id, c.id AS conta_id, u.nome, u.email, " +
+                "  c.agencia, c.numero_conta, c.saldo, " +
+                "  ca.numero_cartao, ca.senha AS pin_cartao, " +
+                "  u.senha AS senha_conta " +
+                "FROM " +
+                "  usuario u " +
+                "JOIN conta c ON u.id = c.usuario_id " +
+                "LEFT JOIN cartao ca ON c.id = ca.conta_id " +
+                "WHERE " +
+                "  c.agencia = ? AND c.numero_conta = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, agencia);
+            stmt.setString(2, numeroConta);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    int contaId = rs.getInt("conta_id");
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String senhaConta = rs.getString("senha_conta");
+                    String agenciaDb = rs.getString("agencia");
+                    String numeroContaDb = rs.getString("numero_conta");
+                    double saldo = rs.getDouble("saldo");
+                    String cartao = rs.getString("numero_cartao");
+                    String pin = rs.getString("pin_cartao");
+
+                    return new UserProfile(id, contaId, nome, email, numeroContaDb, agenciaDb, senhaConta, saldo, cartao, pin);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar perfil por conta: " + e.getMessage());
+        }
+        return null;
     }
 }
