@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -21,7 +22,7 @@
       </Label>
       <Pane layoutX="354.0" layoutY="259.0" prefHeight="69.0" prefWidth="635.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="635.0" style="-fx-background-radius: 8;">
+            <TextField prefHeight="69.0" prefWidth="635.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
@@ -29,7 +30,7 @@
          </children></Pane>
       <Pane layoutX="354.0" layoutY="356.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8;">
+            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +38,7 @@
          </children></Pane>
       <Pane layoutX="748.0" layoutY="356.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="241.0" style="-fx-background-radius: 8;">
+            <TextField prefHeight="69.0" prefWidth="241.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
@@ -45,7 +46,7 @@
          </children></Pane>
       <Pane layoutX="354.0" layoutY="452.0" prefHeight="69.0" prefWidth="381.0" style="-fx-background-color: white; -fx-background-radius: 8;">
          <children>
-            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8;">
+            <TextField prefHeight="69.0" prefWidth="381.0" style="-fx-background-radius: 8; -fx-background-color: transparent;">
                <font>
                   <Font size="24.0" />
                </font>
@@ -94,7 +95,7 @@
       </Text>
       <Label fx:id="labelSaldoAtual" layoutX="65.0" layoutY="315.0" prefHeight="46.0" prefWidth="278.0" text="R$ 380,00" textFill="WHITE">
          <font>
-            <Font name="Montserrat Bold" size="33.0" />
+            <Font name="System\ Bold" size="33.0" />
          </font>
       </Label>
       <Text fill="WHITE" layoutX="68.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transferencia">
@@ -106,7 +107,7 @@
          <children>
             <Text fill="WHITE" layoutX="94.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Continuar">
                <font>
-                  <Font name="Montserrat Regular" size="24.0" />
+                  <Font name="System Regular" size="24.0" />
                </font>
             </Text>
          </children>
@@ -115,7 +116,7 @@
          <children>
             <Text fill="WHITE" layoutX="120.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Voltar">
                <font>
-                  <Font name="Montserrat Regular" size="24.0" />
+                  <Font name="System Regular" size="24.0" />
                </font>
             </Text>
             <ImageView fitHeight="56.0" fitWidth="48.0" layoutX="86.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
@@ -132,7 +133,7 @@
       </ImageView>
       <Text fill="WHITE" layoutX="106.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Midori">
          <font>
-            <Font name="Montserrat ExtraBold" size="40.0" />
+            <Font name="System ExtraBold" size="40.0" />
          </font>
          <effect>
             <InnerShadow offsetY="4.0">
@@ -144,7 +145,7 @@
       </Text>
       <Text fill="#14ff00" layoutX="230.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Bank">
          <font>
-            <Font name="Montserrat ExtraBold" size="40.0" />
+            <Font name="System ExtraBold" size="40.0" />
          </font>
          <effect>
             <InnerShadow offsetY="4.0">
@@ -154,14 +155,18 @@
             </InnerShadow>
          </effect>
       </Text>
-      <SplitMenuButton layoutX="752.0" layoutY="452.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="241.0" style="-fx-background-radius: 8;">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </SplitMenuButton>
+      <Pane layoutX="749.0" layoutY="453.0" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: white; -fx-background-radius: 8;">
+         <children>
+            <ComboBox fx:id="comboTipoConta" prefHeight="69.0" prefWidth="241.0" style="-fx-background-color: transparent; -fx-background-radius: 8;">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Conta Corrente" />
+                     <String fx:value="Conta Poupança" />
+                     <String fx:value="Conta Salário" />
+                  </FXCollections>
+               </items>
+            </ComboBox>
+         </children>
+      </Pane>
    </children>
 </Pane>
