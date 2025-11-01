@@ -64,10 +64,8 @@ public class ConclusaoOperacaoController {
     private void handleSim() {
         SessionManager.clearTransaction();
         try {
-            if ("Saque".equals(tipoOperacao)) {
-                App.setRoot("sacar");
-            } else if ("Deposito".equals(tipoOperacao)) {
-                App.setRoot("depositar");
+            if ("Saque".equals(tipoOperacao) || "Depósito".equals(tipoOperacao)) {
+                App.setRoot("OperacaoValor");
             }
             else {
                 App.setRoot("home");
