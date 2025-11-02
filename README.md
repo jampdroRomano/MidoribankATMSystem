@@ -102,7 +102,7 @@ mvn clean install
 - Credenciais do Banco: Verifique se as credenciais do banco em ```src/main/java/com/midoribank/atm/dao/ConnectionFactory.java``` (usuário: root, senha: 1234) batem com as do seu servidor MySQL.
 - Configuração de Email: Siga os passos da seção 🔑 Configuração de Email.
 - Executar: Utilize o plugin do Maven para JavaFX:
-- Conpilar em uma IDE (Intellij, NetBens, VsCode...)
+- Compilar em uma IDE (Intellij, NetBens, VsCode...)
 ```
 mvn clean javafx:run
 ```
