@@ -45,9 +45,9 @@ MidoribankSystem/
 ## ⚙ Funcionalidades Principais
 | ID    | Funcionalidade           | Descrição                                                   |
 |-------|--------------------------|-------------------------------------------------------------|
-| RF01  | Autenticação             | Login com email e senhaAuth via MySql                     |
-| RF02  | Cadastro Completo        | Fluxo de cadastro de usuário (Nome, Email, Senha)                |
-| RF03  | Recuperação de Senha        | Implementa um fluxo de recuperação de senha. O usuário informa o emai               |
+| RF01  | Autenticação             | Login com email e senhaAuth via MySql, a senha é verificada usando hash jBCrypt                  |
+| RF02  | Cadastro Completo        | Fluxo de cadastro de usuário (Nome, Email, Senha), seguido pelo cadastro de cartão, e criação de PIN de 4 dígitos                |
+| RF03  | Recuperação de Senha        | Implementa um fluxo de recuperação de senha. O usuário informa o email, recebe um código de 6 dígitos, valida o código e redefine a senha         |
 | RF04  | Operação de Saque        | Permite ao usuário sacar dinheiro, validando o saldo disponível e exigindo a senha do cartão
 | RF05  | Operação de Depósito     | Permite ao usuário depositar dinheiro em sua conta                                    |
 | RF06  | Transferência      | UI para iniciar transferência para outra conta (em desenvolvimento)      |
