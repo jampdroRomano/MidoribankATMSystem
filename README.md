@@ -10,7 +10,6 @@
 ---
 
 ## 📖 Descrição do Projeto
-texto do sobre:
 **Midoribank** é um simulador de **operações bancaria**s de **Desktop** desenvolvido em **Java com JavaFX**, projetado para reproduzir as principais operações bancárias de forma prática e visual. O sistema permite ao usuário realizar login, saques, depósitos, transferências e consultas de saldo, tudo dentro de uma interface gráfica intuitiva e moderna
 
 ---
