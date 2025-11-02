@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `midoribank` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `midoribank`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: localhost    Database: midoribank
@@ -32,7 +34,7 @@ CREATE TABLE `cartao` (
   UNIQUE KEY `numero_cartao` (`numero_cartao`),
   KEY `conta_id` (`conta_id`),
   CONSTRAINT `cartao_ibfk_1` FOREIGN KEY (`conta_id`) REFERENCES `conta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +43,7 @@ CREATE TABLE `cartao` (
 
 LOCK TABLES `cartao` WRITE;
 /*!40000 ALTER TABLE `cartao` DISABLE KEYS */;
-INSERT INTO `cartao` VALUES (1,'1111222233334444','','1234',1),(2,'5555666677778888','','5678',2),(3,'9999000011112222','','9012',3);
+INSERT INTO `cartao` VALUES (4,'0417618983927930','146','$2a$12$aa03tIBmGZxAMYnnBRS//uCl51ZBr5DVk0BscU/3lcQM.nxuS0SyW',6);
 /*!40000 ALTER TABLE `cartao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +64,7 @@ CREATE TABLE `conta` (
   UNIQUE KEY `numero_conta` (`numero_conta`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `conta_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +73,7 @@ CREATE TABLE `conta` (
 
 LOCK TABLES `conta` WRITE;
 /*!40000 ALTER TABLE `conta` DISABLE KEYS */;
-INSERT INTO `conta` VALUES (1,1,'2204-5','0123-1',1250.75),(2,2,'1234-5','0123-2',450.00),(3,3,'5678-9','0456-2',4600.20);
+INSERT INTO `conta` VALUES (6,6,'7264-5','67888-7',280.00);
 /*!40000 ALTER TABLE `conta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +96,7 @@ CREATE TABLE `movimentacao` (
   KEY `fk_movimentacao_conta_destino_idx` (`conta_destino_id`),
   CONSTRAINT `fk_movimentacao_conta` FOREIGN KEY (`conta_id`) REFERENCES `conta` (`id`),
   CONSTRAINT `fk_movimentacao_conta_destino` FOREIGN KEY (`conta_destino_id`) REFERENCES `conta` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +105,7 @@ CREATE TABLE `movimentacao` (
 
 LOCK TABLES `movimentacao` WRITE;
 /*!40000 ALTER TABLE `movimentacao` DISABLE KEYS */;
+INSERT INTO `movimentacao` VALUES (6,6,'DEPOSITO',200.00,'2025-11-01 23:01:58',NULL),(7,6,'SAQUE',100.00,'2025-11-01 23:05:36',NULL),(8,6,'DEPOSITO',200.00,'2025-11-01 23:10:36',NULL),(9,6,'DEPOSITO',200.00,'2025-11-01 23:12:13',NULL),(10,6,'SAQUE',20.00,'2025-11-01 23:25:18',NULL),(11,6,'SAQUE',200.00,'2025-11-01 23:57:52',NULL);
 /*!40000 ALTER TABLE `movimentacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +125,7 @@ CREATE TABLE `recuperacao_senha` (
   PRIMARY KEY (`id`),
   KEY `fk_recuperacao_usuario_idx` (`usuario_id`),
   CONSTRAINT `fk_recuperacao_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,6 +134,7 @@ CREATE TABLE `recuperacao_senha` (
 
 LOCK TABLES `recuperacao_senha` WRITE;
 /*!40000 ALTER TABLE `recuperacao_senha` DISABLE KEYS */;
+INSERT INTO `recuperacao_senha` VALUES (12,6,'570724','2025-11-01 23:13:22',0);
 /*!40000 ALTER TABLE `recuperacao_senha` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +152,7 @@ CREATE TABLE `usuario` (
   `senha` varchar(60) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +161,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Alvaro Gatao','alvaro@midori.com','alvaro123'),(2,'Jao','jotape@midori.com','jao123'),(3,'Alemao','alemao@midori.com','alemao123');
+INSERT INTO `usuario` VALUES (6,'joao pedro vieira dos santos romano','joao.291648-2025@aluno.unicv.edu.br','$2a$12$7d/WkDhf48IJadB7H2vS6OJoxnLoZuGCU4Hl0il8AXyg4uTAlFrP2');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-31 18:22:02
+-- Dump completed on 2025-11-01 23:14:25
